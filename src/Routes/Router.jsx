@@ -5,6 +5,11 @@ import CityMap from "../Pages/CityMap/CityMap";
 import ErrorPage from "../Pages/Error/ErrorPage";
 import RegistrationPage from "../Authentication/Pages/RegistrationPage/RegistrationPage";
 import LogInPage from "../Authentication/Pages/LogInPage/LogInPage";
+import PrivateRoute from "./PrivateRoute";
+import CitizenDashboard from "../Pages/Dashboard/CitizenDashboard/CitizenDashboard";
+import StaffDashboard from "../Pages/Dashboard/StaffDashboard/StaffDashboard";
+import AdminDashboard from "../Pages/Dashboard/AdminDashboard/AdminDashboard";
+import IssueDetails from "../Pages/IssueDetails/IssueDetails";
 
 const router = createBrowserRouter([
   {
@@ -20,16 +25,32 @@ const router = createBrowserRouter([
         Component: CityMap,
       },
       {
-        path: "*",
-        element: <ErrorPage />,
-      },
-      {
         path: "register",
         element: <RegistrationPage />,
       },
       {
         path: "login",
         element: <LogInPage />
+      },
+      {
+        path: "dashboard/citizen",
+        element: <PrivateRoute><CitizenDashboard /></PrivateRoute>
+      },
+      {
+        path: "dashboard/staff",
+        element: <PrivateRoute><StaffDashboard /></PrivateRoute>
+      },
+      {
+        path: "dashboard/admin",
+        element: <PrivateRoute><AdminDashboard /></PrivateRoute>
+      },
+      {
+        path: "issue-details/:id",
+        element: <PrivateRoute><IssueDetails /></PrivateRoute>
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
       },
     ],
   },
