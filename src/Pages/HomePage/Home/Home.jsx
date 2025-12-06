@@ -6,6 +6,7 @@ import Features from "../../../Components/Features/Features";
 import Testimonials from "../../../Components/Testimonials/Testimonials";
 import FAQ from "../../../Components/FAQ/FAQ";
 import Awards from "../../../Components/Awards/Awards";
+import CommunityChallenges from "../../../Components/CommunityChallenges/CommunityChallenges";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       <Features />
       <Testimonials />
       <Awards />
+      <CommunityChallenges />
       <FAQ />
     </div>
   );
