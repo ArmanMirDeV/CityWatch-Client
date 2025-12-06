@@ -1,18 +1,89 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Context/AuthContext";
 
 export default function RegistrationForm() {
   const { register, handleSubmit } = useForm();
+  const { registerUser, signInGoogle, updateUserProfile } =
+    useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      // Upload profile image to ImgBB
+      const imageFile = data.profileImage[0];
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const imgbbRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_img_host_key
+        }`,
+        formData
+      );
+      const photoURL = imgbbRes.data.data.url;
+
+      // Create user with email & password
+      const userCredential = await registerUser(data.email, data.password);
+
+      // Update Firebase user profile
+      await updateUserProfile({
+        displayName: `${data.firstName} ${data.secondName}`,
+        photoURL,
+      });
+
+      // SweetAlert success
+      Swal.fire({
+        icon: "success",
+        title: "Registration Successful",
+        text: `Welcome ${data.firstName}!`,
+        showConfirmButton: false, // Auto close
+        timer: 1500,
+      });
+      navigate("/");
+    } catch (error) {
+      console.error("Registration Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    console.log("Google Sign-In Clicked");
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const result = await signInGoogle();
+      Swal.fire({
+        icon: "success",
+        title: "Google Sign-In Successful",
+        text: `Welcome ${result.user.displayName}!`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/");
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Google Sign-In Failed",
+        text: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,7 +106,7 @@ export default function RegistrationForm() {
                   First Name
                 </label>
                 <input
-                  {...register("firstName")}
+                  {...register("firstName", { required: true })}
                   className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
                 />
               </div>
@@ -45,7 +116,7 @@ export default function RegistrationForm() {
                   Second Name
                 </label>
                 <input
-                  {...register("secondName")}
+                  {...register("secondName", { required: true })}
                   className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
                 />
               </div>
@@ -56,7 +127,7 @@ export default function RegistrationForm() {
                 Username
               </label>
               <input
-                {...register("username")}
+                {...register("username", { required: true })}
                 className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
               />
             </div>
@@ -66,8 +137,19 @@ export default function RegistrationForm() {
                 Email
               </label>
               <input
-                {...register("email")}
+                {...register("email", { required: true })}
                 type="email"
+                className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Password
+              </label>
+              <input
+                {...register("password", { required: true })}
+                type="password"
                 className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
               />
             </div>
@@ -78,7 +160,7 @@ export default function RegistrationForm() {
                 Upload Profile Image
               </label>
               <input
-                {...register("profileImage")}
+                {...register("profileImage", { required: true })}
                 type="file"
                 accept="image/*"
                 className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
@@ -89,9 +171,11 @@ export default function RegistrationForm() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              type="submit"
+              disabled={loading}
               className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-full shadow-md hover:bg-indigo-700 transition"
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </motion.button>
           </form>
 
@@ -100,11 +184,12 @@ export default function RegistrationForm() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleGoogleSignIn}
+            disabled={loading}
             className="mt-4 w-full flex items-center justify-center gap-3 bg-white border border-gray-300 py-2 rounded-full shadow-sm hover:bg-gray-50 transition"
           >
             <FcGoogle className="text-2xl" />
             <span className="text-gray-700 text-sm font-medium">
-              Continue with Google
+              {loading ? "Processing..." : "Continue with Google"}
             </span>
           </motion.button>
         </div>
