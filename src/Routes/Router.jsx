@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import RootLayout from "../Layouts/RootLayout";
 import Home from "../Pages/HomePage/Home/Home";
 import CityMap from "../Pages/CityMap/CityMap";
+import ErrorPage from "../Pages/Error/ErrorPage";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             {
                 path: 'city-map',
                 Component: CityMap
+            },
+            {
+                path: "*",
+                element: <ErrorPage />
             }
         ]
 
