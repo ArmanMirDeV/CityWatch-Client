@@ -6,12 +6,22 @@ import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { useMutation } from "@tanstack/react-query";
 
 export default function LogInPage() {
   const { register, handleSubmit } = useForm();
   const { signInUser, signInGoogle } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+
+  const { mutateAsync: saveUser } = useMutation({
+    mutationFn: async (user) => {
+        const res = await axiosPublic.post("/users", user);
+        return res.data;
+    }
+  })
 
   // Email/Password Login
   const onSubmit = async (data) => {
@@ -30,6 +40,18 @@ export default function LogInPage() {
 
     try {
       const result = await signInUser(data.username, data.password);
+      
+      const userInfo = {
+        name: result.user.displayName || data.username,
+        email: result.user.email,
+        photoURL: result.user.photoURL,
+      }
+      await saveUser(userInfo).then(data => {
+        if (data.insertedId) {
+            console.log("User added to database");
+        }
+      })
+
       Swal.fire({
         icon: "success",
         title: "Login Successful",
@@ -37,7 +59,7 @@ export default function LogInPage() {
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
-        navigate("/home"); // auto redirect to home
+        navigate("/"); 
       });
     } catch (error) {
       console.error("Login Error:", error);
@@ -56,6 +78,18 @@ export default function LogInPage() {
     setLoading(true);
     try {
       const result = await signInGoogle();
+
+      const userInfo = {
+        name: result.user.displayName,
+        email: result.user.email,
+        photoURL: result.user.photoURL,
+      }
+      await saveUser(userInfo).then(data => {
+        if (data.insertedId) {
+            console.log("User added to database");
+        }
+      })
+
       Swal.fire({
         icon: "success",
         title: "Google Sign-In Successful",
@@ -63,7 +97,7 @@ export default function LogInPage() {
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
-        navigate("/home");
+        navigate("/");
       });
     } catch (error) {
       console.error("Google Sign-In Error:", error);

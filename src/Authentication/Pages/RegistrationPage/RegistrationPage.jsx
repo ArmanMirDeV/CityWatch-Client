@@ -7,12 +7,22 @@ import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { useMutation } from "@tanstack/react-query";
 
 export default function RegistrationForm() {
   const { register, handleSubmit } = useForm();
   const { registerUser, signInGoogle, updateUserProfile } =
     useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const axiosPublic = useAxiosPublic();
+
+  const { mutateAsync: saveUser } = useMutation({
+    mutationFn: async (user) => {
+        const res = await axiosPublic.post("/users", user);
+        return res.data;
+    }
+  })
 
   const navigate = useNavigate();
 
@@ -61,6 +71,17 @@ export default function RegistrationForm() {
         photoURL,
       });
 
+      const userInfo = {
+        name: `${data.firstName} ${data.secondName}`,
+        email: data.email,
+        photoURL: photoURL,
+      };
+      await saveUser(userInfo).then(data => {
+        if (data.insertedId) {
+            console.log("User added to database");
+        }
+      })
+
       // SweetAlert success
       Swal.fire({
         icon: "success",
@@ -86,6 +107,16 @@ export default function RegistrationForm() {
     setLoading(true);
     try {
       const result = await signInGoogle();
+      const userInfo = {
+        name: result.user.displayName,
+        email: result.user.email,
+        photoURL: result.user.photoURL,
+      };
+      await saveUser(userInfo).then(data => {
+        if (data.insertedId) {
+            console.log("User added to database");
+        }
+      })
       Swal.fire({
         icon: "success",
         title: "Google Sign-In Successful",
