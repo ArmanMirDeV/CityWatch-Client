@@ -4,7 +4,6 @@ import { Carousel } from "react-responsive-carousel";
 import { FiArrowUpRight } from "react-icons/fi";
 import { Link } from "react-router";
 
-// Import all 10 banner images
 import bannerImg1 from "../../assets/banner/banner1.jpg";
 import bannerImg2 from "../../assets/banner/banner2.jpg";
 import bannerImg3 from "../../assets/banner/banner3.jpg";
