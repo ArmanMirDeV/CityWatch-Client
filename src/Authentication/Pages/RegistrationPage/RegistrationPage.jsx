@@ -2,12 +2,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export default function RegistrationForm() {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log("Form Data:", data);
+  };
+
+  const handleGoogleSignIn = () => {
+    console.log("Google Sign-In Clicked");
   };
 
   return (
@@ -19,8 +24,8 @@ export default function RegistrationForm() {
       >
         {/* LEFT SIDE — FORM */}
         <div className="w-full md:w-1/2 p-10">
-          <h1 className="text-3xl font-semibold text-gray-800 mb-6">
-            <span className="font-bold">Registration</span> Form
+          <h1 className="text-3xl font-bold text-gray-800 mb-6">
+            Registration
           </h1>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -67,16 +72,20 @@ export default function RegistrationForm() {
               />
             </div>
 
+            {/* Image Upload Field */}
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">
-                Phone Number
+                Upload Profile Image
               </label>
               <input
-                {...register("phone")}
+                {...register("profileImage")}
+                type="file"
+                accept="image/*"
                 className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
               />
             </div>
 
+            {/* Register Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -85,11 +94,23 @@ export default function RegistrationForm() {
               Register
             </motion.button>
           </form>
+
+          {/* Google Sign In Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleGoogleSignIn}
+            className="mt-4 w-full flex items-center justify-center gap-3 bg-white border border-gray-300 py-2 rounded-full shadow-sm hover:bg-gray-50 transition"
+          >
+            <FcGoogle className="text-2xl" />
+            <span className="text-gray-700 text-sm font-medium">
+              Continue with Google
+            </span>
+          </motion.button>
         </div>
 
         {/* RIGHT SIDE — ROCKET ART */}
         <div className="w-full md:w-1/2 bg-[#1e2130] flex items-center justify-center relative p-10">
-          {/* geometric shapes */}
           <Shapes />
 
           <motion.div
