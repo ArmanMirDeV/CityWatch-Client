@@ -18,6 +18,26 @@ export default function RegistrationForm() {
 
   const onSubmit = async (data) => {
     setLoading(true);
+
+    // Password validation regex
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=]).{6,}$/;
+
+    if (!passwordRegex.test(data.password)) {
+      Swal.fire({
+        icon: "warning",
+        title: "Weak Password",
+        html: `Password must contain:<br/>
+              • At least 6 characters<br/>
+              • One uppercase letter<br/>
+              • One lowercase letter<br/>
+              • One number<br/>
+              • One special character`,
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
       // Upload profile image to ImgBB
       const imageFile = data.profileImage[0];
@@ -46,7 +66,7 @@ export default function RegistrationForm() {
         icon: "success",
         title: "Registration Successful",
         text: `Welcome ${data.firstName}!`,
-        showConfirmButton: false, // Auto close
+        showConfirmButton: false,
         timer: 1500,
       });
       navigate("/");
@@ -192,6 +212,18 @@ export default function RegistrationForm() {
               {loading ? "Processing..." : "Continue with Google"}
             </span>
           </motion.button>
+
+          {/* Go to Login Button */}
+          <motion.div className="mt-6 text-center">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/login")}
+              className="text-sm text-indigo-600 hover:underline"
+            >
+              Already have an account? Login
+            </motion.button>
+          </motion.div>
         </div>
 
         {/* RIGHT SIDE — ROCKET ART */}
