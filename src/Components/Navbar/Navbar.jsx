@@ -2,11 +2,15 @@ import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import Logo from "../Logo/Logo";
 import { AuthContext } from "../../Authentication/Context/AuthContext";
+import useRole from "../../Hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [role] = useRole();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
+  const dashboardPath = role === 'admin' ? '/dashboard/admin' : role === 'staff' ? '/dashboard/staff' : '/dashboard/citizen';
 
   const menuItems = [
     { name: "Home", path: "/" },
@@ -75,7 +79,7 @@ const Navbar = () => {
                   </div>
                 </div>
                 <NavLink
-                  to="/dashboard/citizen"
+                  to={dashboardPath}
                   className="btn btn-sm w-fit mb-2"
                   onClick={() => setDropdownOpen(false)}
                 >
@@ -159,7 +163,7 @@ const Navbar = () => {
                 <ul className="flex flex-col">
                   <li>
                     <NavLink
-                      to="/dashboard/citizen"
+                      to={dashboardPath}
                       className="block px-4 py-2 hover:bg-gray-100"
                       onClick={() => setDropdownOpen(false)}
                     >

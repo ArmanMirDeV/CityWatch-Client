@@ -32,25 +32,51 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const logOut = () => {
-    setLoading(true);
-    return signOut(auth);
-  };
-
-  const updateUserProfile = (profile) => {
-    if (!auth.currentUser) return Promise.reject("No user logged in");
-    return updateProfile(auth.currentUser, profile);
-  };
-
   // Observer to track auth state
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-      console.log("Current User:", currentUser);
+        if (currentUser) {
+             setUser(currentUser);
+             setLoading(false);
+             localStorage.removeItem('dbUser'); // Clear DB user if Firebase user exists
+        } else {
+            // Check for persistent DB user if no Firebase user
+            const dbUser = localStorage.getItem('dbUser');
+            if (dbUser) {
+                setUser(JSON.parse(dbUser));
+                setLoading(false);
+            } else {
+                setUser(null);
+                setLoading(false);
+            }
+        }
     });
     return () => unSubscribe();
   }, []);
+  const updateUserProfile = (name, photo) => {
+    setLoading(true);
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
+
+
+  const dbLogin = (userObj) => {
+       setUser(userObj);
+       localStorage.setItem('dbUser', JSON.stringify(userObj));
+       setLoading(false);
+  }
+
+  const logOut = () => {
+    setLoading(true);
+    localStorage.removeItem('dbUser'); // Clear DB user on logout
+    // Also sign out from Firebase just in case
+    return signOut(auth).then(() => {
+        setUser(null);
+        setLoading(false);
+    });
+  };
 
   const authInfo = {
     registerUser,
@@ -60,6 +86,7 @@ const AuthProvider = ({ children }) => {
     loading,
     logOut,
     updateUserProfile,
+    dbLogin
   };
 
   return (

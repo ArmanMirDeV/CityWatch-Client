@@ -1,11 +1,44 @@
-
 import React from 'react';
+import { NavLink, Outlet } from 'react-router';
+import { FaHome, FaUsers, FaUserShield, FaClipboardList, FaBars } from 'react-icons/fa';
+import useAuth from '../../../Hooks/useAuth';
 
 const AdminDashboard = () => {
+    const { user } = useAuth();
+    
     return (
-        <div>
-            <h2>Admin Dashboard</h2>
-            <p>System overview and management.</p>
+        <div className="drawer lg:drawer-open">
+            <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col p-4">
+                {/* Page content here */}
+                <label htmlFor="my-drawer-2" className="btn btn-primary text-black drawer-button lg:hidden mb-4 w-fit">
+                    <FaBars /> Open Menu
+                </label>
+                <Outlet />
+            </div>
+            <div className="drawer-side z-40">
+                <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
+                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content flex flex-col">
+                    {/* Sidebar content here */}
+                    <div className="mb-6 flex flex-col items-center">
+                         <div className="avatar placeholder mb-2">
+                             <div className="bg-neutral text-neutral-content rounded-full w-16">
+                                <span className="text-xl font-bold"><img src={user.photoURL} alt="" /></span>
+                             </div>
+                         </div>
+                         <h2 className="text-xl font-bold">Admin Dashboard</h2>
+                         <p className="text-sm opacity-70">Welcome, {user?.displayName}</p>
+                    </div>
+
+                    <li><NavLink to="/dashboard/admin" end><FaHome /> Overview</NavLink></li>
+                    <li><NavLink to="/dashboard/admin/manage-users"><FaUsers /> Manage Users</NavLink></li>
+                    <li><NavLink to="/dashboard/admin/manage-staff"><FaUserShield /> Manage Staff</NavLink></li>
+                    <li><NavLink to="/dashboard/admin/all-issues"><FaClipboardList /> All Issues</NavLink></li>
+                    
+                    <div className="divider"></div>
+                    <li><NavLink to="/"><FaHome /> Home</NavLink></li>
+                </ul>
+            </div>
         </div>
     );
 };
