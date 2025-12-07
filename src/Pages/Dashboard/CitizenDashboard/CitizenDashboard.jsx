@@ -56,7 +56,7 @@ const CitizenDashboard = () => {
                                 end={link.end}
                                 onClick={() => setIsSidebarOpen(false)}
                                 className={({ isActive }) => 
-                                    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-primary text-white shadow-md' : 'hover:bg-gray-100 text-gray-600'}`
+                                    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-primary  text-black shadow-md' : 'hover:bg-gray-100 text-gray-600'}`
                                 }
                             >
                                 {link.icon}

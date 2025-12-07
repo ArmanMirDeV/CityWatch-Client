@@ -66,10 +66,10 @@ export default function RegistrationForm() {
       const userCredential = await registerUser(data.email, data.password);
 
       // Update Firebase user profile
-      await updateUserProfile({
-        displayName: `${data.firstName} ${data.secondName}`,
-        photoURL,
-      });
+      await updateUserProfile(
+        `${data.firstName} ${data.secondName}`,
+        photoURL
+      );
 
       const userInfo = {
         name: `${data.firstName} ${data.secondName}`,
