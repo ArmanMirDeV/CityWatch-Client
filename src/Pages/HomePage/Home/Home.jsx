@@ -7,12 +7,14 @@ import Testimonials from "../../../Components/Testimonials/Testimonials";
 import FAQ from "../../../Components/FAQ/FAQ";
 import Awards from "../../../Components/Awards/Awards";
 import CommunityChallenges from "../../../Components/CommunityChallenges/CommunityChallenges";
+import LatestResolvedIssues from "../../../Components/LatestResolvedIssues/LatestResolvedIssues";
 
 const Home = () => {
   return (
     <div>
       <HeroSection />
       <Banner />
+      <LatestResolvedIssues />
       <HowItWorks />
       <Features />
       <Testimonials />
