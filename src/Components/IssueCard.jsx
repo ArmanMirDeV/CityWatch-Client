@@ -6,7 +6,7 @@ import useAxiosPublic from '../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 
 const IssueCard = ({ issue, refetch }) => {
-    const { _id, title, description, category, status, priority, location, image, upvotes, createdAt } = issue;
+    const { _id, title, description, category, status, priority, location, img, upvotes, createdAt } = issue;
     const { user } = useAuth();
     const navigate = useNavigate();
     const axiosPublic = useAxiosPublic();
@@ -63,7 +63,7 @@ const IssueCard = ({ issue, refetch }) => {
         <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
             <figure className="relative h-48 overflow-hidden">
                 <img 
-                    src={image} 
+                    src={img} 
                     alt={title} 
                     className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                 />
