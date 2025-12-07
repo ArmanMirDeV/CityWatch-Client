@@ -75,7 +75,7 @@ const Navbar = () => {
                   </div>
                 </div>
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/citizen"
                   className="btn btn-sm w-fit mb-2"
                   onClick={() => setDropdownOpen(false)}
                 >
@@ -159,7 +159,7 @@ const Navbar = () => {
                 <ul className="flex flex-col">
                   <li>
                     <NavLink
-                      to="/dashboard"
+                      to="/dashboard/citizen"
                       className="block px-4 py-2 hover:bg-gray-100"
                       onClick={() => setDropdownOpen(false)}
                     >

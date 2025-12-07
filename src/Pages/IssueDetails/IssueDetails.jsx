@@ -16,8 +16,12 @@ import {
   FaRocket,
   FaUserTie,
 } from "react-icons/fa";
+import EditIssueModal from "../Dashboard/CitizenDashboard/EditIssueModal";
 
 const IssueDetails = () => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedIssue, setSelectedIssue] = useState(null);
+
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
@@ -81,9 +85,9 @@ const IssueDetails = () => {
     priority,
     location,
     img,
+    image,
     createdAt,
     userEmail,
-    photoURL,
     assignedStaff,
     staffDetails,
     timeline,
@@ -136,7 +140,10 @@ const IssueDetails = () => {
           {isOwner && status === "pending" && (
             <button
               className="btn btn-outline btn-info gap-2"
-              onClick={() => navigate(`/edit-issue/${id}`)}
+              onClick={() => {
+                setSelectedIssue(issue);
+                setIsEditModalOpen(true);
+              }}
             >
               <FaEdit /> Edit
             </button>
@@ -165,7 +172,11 @@ const IssueDetails = () => {
         {/* Left Column: Image & Description */}
         <div className="lg:col-span-2 space-y-8">
           <div className="rounded-2xl overflow-hidden shadow-xl border border-base-200">
-            <img src={img} alt={title} className="w-full h-auto object-cover" />
+            <img
+              src={img || image}
+              alt={title}
+              className="w-full h-auto object-cover"
+            />
           </div>
 
           <div className="bg-base-100 p-6 rounded-xl shadow-lg border border-base-200">
@@ -251,6 +262,14 @@ const IssueDetails = () => {
           </div>
         </div>
       </div>
+
+      {isEditModalOpen && (
+        <EditIssueModal
+          issue={selectedIssue}
+          onClose={() => setIsEditModalOpen(false)}
+          refetch={refetch}
+        />
+      )}
 
       {/* Payment Modal */}
       <PaymentModal

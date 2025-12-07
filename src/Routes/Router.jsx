@@ -11,6 +11,11 @@ import StaffDashboard from "../Pages/Dashboard/StaffDashboard/StaffDashboard";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard/AdminDashboard";
 import IssueDetails from "../Pages/IssueDetails/IssueDetails";
 import AllIssues from "../Pages/AllIssues/AllIssues";
+import CitizenStats from "../Pages/Dashboard/CitizenDashboard/CitizenStats";
+import MyIssues from "../Pages/Dashboard/CitizenDashboard/MyIssues";
+import ReportIssue from "../Pages/Dashboard/CitizenDashboard/ReportIssue";
+import UserProfile from "../Pages/Dashboard/CitizenDashboard/UserProfile";
+import EditIssueModal from "../Pages/Dashboard/CitizenDashboard/EditIssueModal";
 
 const router = createBrowserRouter([
   {
@@ -31,27 +36,62 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <LogInPage />
+        element: <LogInPage />,
       },
       {
         path: "dashboard/citizen",
-        element: <PrivateRoute><CitizenDashboard /></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <CitizenDashboard />
+          </PrivateRoute>
+        ),
+        children: [
+          {
+            index: true,
+            element: <CitizenStats />,
+          },
+          {
+            path: "my-issues",
+            element: <MyIssues />,
+          },
+
+          {
+            path: "report-issue",
+            element: <ReportIssue />,
+          },
+          {
+            path: "profile",
+            element: <UserProfile />,
+          },
+        ],
       },
       {
         path: "dashboard/staff",
-        element: <PrivateRoute><StaffDashboard /></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <StaffDashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "dashboard/admin",
-        element: <PrivateRoute><AdminDashboard /></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <AdminDashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "issue-details/:id",
-        element: <PrivateRoute><IssueDetails /></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <IssueDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-issues",
-        Component: AllIssues
+        Component: AllIssues,
       },
       {
         path: "*",
