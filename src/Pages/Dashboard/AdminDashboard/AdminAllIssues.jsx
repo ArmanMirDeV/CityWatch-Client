@@ -15,9 +15,7 @@ const AdminAllIssues = () => {
     const { data: issuesData = {}, refetch: refetchIssues } = useQuery({
         queryKey: ['admin-issues'],
         queryFn: async () => {
-            // Reusing existing API, maybe with a specific Admin query if needed, or just fetch all first page for now
-            // Or better: fetch pending/all issues without pagination for this view or add pagination later
-            // For admin management, pagination is good. Let's use the same structure as AllIssues but simplified view
+        
             const res = await axiosPublic.get('/issues?limit=50'); // Fetch more for admin view
             return res.data; 
         }
@@ -134,10 +132,10 @@ const AdminAllIssues = () => {
 
                     <div className="modal-action">
                         <form method="dialog">
-                            {/* if there is a button in form, it will close the modal */}
+                          
                             <button className="btn btn-ghost mr-2">Cancel</button>
                         </form>
-                        <button className="btn btn-primary" onClick={handleAssignStaff} disabled={!selectedStaff}>Confirm Assignment</button>
+                        <button className="btn btn-primary text-black" onClick={handleAssignStaff} disabled={!selectedStaff}>Confirm Assignment</button>
                     </div>
                 </div>
             </dialog>
