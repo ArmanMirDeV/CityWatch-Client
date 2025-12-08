@@ -14,7 +14,7 @@ const CitizenDashboard = () => {
     };
 
     const navLinks = [
-        { path: '', icon: <FaChartPie />, label: 'Overview', end: true }, // Default route
+        { path: '', icon: <FaChartPie />, label: 'Overview', end: true }, 
         { path: 'my-issues', icon: <FaList />, label: 'My Issues' },
         { path: 'report-issue', icon: <FaPlusCircle />, label: 'Report Issue' },
         { path: 'profile', icon: <FaUser />, label: 'Profile' },

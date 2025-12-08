@@ -67,7 +67,7 @@ const Banner = () => {
           lg:bottom-32
         "
       >
-        <Link to="/report-issue">
+        <Link to="/dashboard/citizen/report-issue">
           <button
             className="
               flex items-center gap-3 bg-blue-600 text-white font-medium
