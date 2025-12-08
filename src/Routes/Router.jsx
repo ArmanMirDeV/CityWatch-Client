@@ -25,6 +25,7 @@ import ManageUsers from "../Pages/Dashboard/AdminDashboard/ManageUsers";
 import ManageStaff from "../Pages/Dashboard/AdminDashboard/ManageStaff";
 import AdminAllIssues from "../Pages/Dashboard/AdminDashboard/AdminAllIssues";
 import StaffProfile from "../Pages/Dashboard/StaffDashboard/StaffProfile";
+import TopIssues from "../Pages/TopIssues/TopIssues";
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <RegistrationPage />,
+      },
+      {
+        path: "top-issues",
+        element: <TopIssues />
       },
       {
         path: "login",
