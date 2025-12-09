@@ -1,16 +1,42 @@
-# React + Vite
+# CityWatch - Public Infrastructure Reporting System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CityWatch is a comprehensive web application designed to empower citizens to report public infrastructure issues (like potholes, broken streetlights, etc.) and enable government staff to track, manage, and resolve them efficiently.
 
-Currently, two official plugins are available:
+## 🔗 Live Site
+https://city-watch-mir.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔐 Admin Credentials
+Use these credentials to access the Admin Dashboard and test administrative features:
+*   **Email:** `admin_test@example.com`
+*   **Password:** `password123`
 
-## React Compiler
+## ✨ Key Features
+*   **📢 Issue Reporting System:** Citizens can easily report infrastructure problems with detailed descriptions and images.
+*   **🗺️ Interactive Map:** Browse reported issues on a dynamic map interface (powered by Leaflet) to see problem hotspots.
+*   **👥 Role-Based Dashboards:** tailored experiences for three distinct user roles:
+    *   **Admin:** Manage users, assign tasks, and oversee system stats.
+    *   **Staff:** View and update the status of assigned issues.
+    *   **Citizen:** Track personal reports and view public issue feeds.
+*   **🔄 Real-time Status Tracking:** Monitor the progress of reports from "Pending" to "In Progress" to "Resolved".
+*   **💳 Premium Subscriptions:** Integrated Stripe payment gateway allowing users to upgrade for priority handling and enhanced features.
+*   **📊 Data Visualization:** Admin dashboard featuring charts and graphs (Recharts) to visualize reporting trends and resolution rates.
+*   **🔒 Secure Authentication:** Robust user authentication system powered by Firebase.
+*   **📄 PDF Report Generation:** Export issue details and summaries into professional PDF formats.
+*   **📱 Fully Responsive Design:** Modern, mobile-first interface built with Tailwind CSS and DaisyUI.
+*   **⚡ Optimized Performance:** Utilizes TanStack Query for efficient data fetching and caching.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Technology Used
+### Frontend
+*   **React (Vite):** Fast and modern UI library.
+*   **Tailwind CSS & DaisyUI:** Rapid styling and component library.
+*   **TanStack Query:** Powerful asynchronous state management.
+*   **React Leaflet:** Maps integration.
+*   **Framer Motion:** Smooth animations and transitions.
+*   **React Hook Form:** Efficient form handling.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Backend
+*   **Node.js & Express:** Scalable server-side architecture.
+*   **MongoDB:** NoSQL database for flexible data storage.
+*   **Stripe:** Secure payment processing.
+*   **Firebase Auth:** Reliable identity management.
+*   **JWT:** Secure token-based authentication mechanism.

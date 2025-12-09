@@ -7,7 +7,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const CitizenStats = () => {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
 
     const { data: stats, isLoading } = useQuery({
@@ -19,7 +19,7 @@ const CitizenStats = () => {
         enabled: !!user?.email
     });
 
-    if (isLoading) return <div className="flex justify-center p-10"><span className="loading loading-dots loading-lg"></span></div>;
+    if (loading || isLoading || !stats) return <div className="flex justify-center p-10"><span className="loading loading-dots loading-lg"></span></div>;
 
     const data = [
         { name: 'Pending', value: stats.pending, color: '#fbbd23' },

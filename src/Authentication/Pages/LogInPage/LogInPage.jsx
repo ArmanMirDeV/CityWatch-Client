@@ -39,38 +39,7 @@ export default function LogInPage() {
     }
 
     try {
-      // 1. Attempt DB Login (Admin/Staff)
-      try {
-        const dbRes = await axiosSecure.post("/auth/login", {
-          email: data.username,
-          password: data.password,
-        });
-
-        if (dbRes.data.success) {
-          dbLogin(dbRes.data.user);
-          Swal.fire({
-            icon: "success",
-            title: "Login Successful",
-            text: `Welcome back, ${dbRes.data.user.name}!`,
-            timer: 2000,
-            showConfirmButton: false,
-          }).then(() => {
-            navigate(
-              dbRes.data.user.role === "admin"
-                ? "/dashboard/admin"
-                : dbRes.data.user.role === "staff"
-                ? "/dashboard/staff"
-                : "/"
-            );
-          });
-          return; // Stop here if DB login works
-        }
-      } catch (dbError) {
-        // If 401/404, silently fail and try Firebase
-        // console.log("DB Login checked: Not found or invalid. Trying Firebase.");
-      }
-
-      // 2. Fallback to Firebase Login (Citizens)
+      // 1. Firebase Login (Citizens, Admin, Staff)
       const result = await signInUser(data.username, data.password);
 
       const userInfo = {
@@ -78,7 +47,10 @@ export default function LogInPage() {
         email: result.user.email,
         photoURL: result.user.photoURL,
       };
-      // Ensure citizen exists in DB (sync)
+      // Ensure user exists in DB (sync) - valuable if they were created manually in Firebase but not in DB (unlikely)
+      // or if they are logging in for the first time after a DB wipe?
+      // Actually, for Admin/Staff who are ALREADY in DB, this saveUser might trigger "User already exists".
+      // Let's see how saveUser handles it.
       await saveUser(userInfo).then((data) => {
         if (data.insertedId) {
           console.log("User added to database");
@@ -88,7 +60,7 @@ export default function LogInPage() {
       Swal.fire({
         icon: "success",
         title: "Login Successful",
-        text: `Welcome ${result.user.displayName || data.username}!`,
+        text: `Welcome ${result.user.displayName || result.user.email}!`,
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
@@ -99,7 +71,7 @@ export default function LogInPage() {
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: error.message, //.includes("auth") ? "Invalid Credentials" : error.message,
+        text: error.message,
       });
     } finally {
       setLoading(false);

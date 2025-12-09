@@ -34,33 +34,13 @@ const AuthProvider = ({ children }) => {
 
   // Observer to track auth state
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
              setUser(currentUser);
-             
-             // Get Token
-             const userInfo = { email: currentUser.email };
-             fetch('http://localhost:3000/jwt', { 
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(userInfo)
-             })
-             .then(res => res.json())
-             .then(data => {
-                 if (data.token) {
-                     localStorage.setItem('access-token', data.token);
-                 }
-                 setLoading(false);
-             })
-             .catch(err => {
-                 console.error("JWT Fetch Error", err);
-                 setLoading(false);
-             });
-
+             const token = await currentUser.getIdToken(true);
+             localStorage.setItem('access-token', token);
+             setLoading(false);
              localStorage.removeItem('dbUser');
-
         } else {
              localStorage.removeItem('access-token');
              
@@ -70,18 +50,6 @@ const AuthProvider = ({ children }) => {
                 const parsedUser = JSON.parse(dbUser);
                 setUser(parsedUser);
                 setLoading(false);
-                
-                // Refresh token for DB user too if needed (optional, but good practice)
-                 const userInfo = { email: parsedUser.email };
-                 fetch('http://localhost:3000/jwt', { 
-                    method: 'POST',
-                    headers: { 'content-type': 'application/json' },
-                    body: JSON.stringify(userInfo)
-                 })
-                 .then(res => res.json())
-                 .then(data => {
-                     if (data.token) localStorage.setItem('access-token', data.token);
-                 });
             } else {
                 setUser(null);
                 setLoading(false);
@@ -99,28 +67,12 @@ const AuthProvider = ({ children }) => {
   };
 
 
-  const dbLogin = (userObj) => {
+  const dbLogin = async (userObj) => {
        setUser(userObj);
        localStorage.setItem('dbUser', JSON.stringify(userObj));
-       
-       // Get Token for DB User
-       const userInfo = { email: userObj.email };
-       fetch('http://localhost:3000/jwt', { 
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(userInfo)
-       })
-       .then(res => res.json())
-       .then(data => {
-            if (data.token) {
-                localStorage.setItem('access-token', data.token);
-            }
-            setLoading(false);
-       })
-       .catch(err => {
-            console.error(err);
-            setLoading(false);
-       });
+       setLoading(false);
+       // Note: DB Login users won't have a Firebase token unless we custom mint one or they are also firebase users. 
+       // For now, assuming standard flow uses Firebase Auth.
   }
 
   const logOut = () => {
