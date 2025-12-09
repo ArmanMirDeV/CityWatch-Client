@@ -25,6 +25,7 @@ import ManageUsers from "../Pages/Dashboard/AdminDashboard/ManageUsers";
 import ManageStaff from "../Pages/Dashboard/AdminDashboard/ManageStaff";
 import AdminAllIssues from "../Pages/Dashboard/AdminDashboard/AdminAllIssues";
 import AdminProfile from "../Pages/Dashboard/AdminDashboard/AdminProfile";
+import Payments from "../Pages/Dashboard/AdminDashboard/Payments";
 import StaffProfile from "../Pages/Dashboard/StaffDashboard/StaffProfile";
 import TopIssues from "../Pages/TopIssues/TopIssues";
 
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
             {
                 path: "profile",
                 element: <AdminProfile />
+            },
+            {
+                path: "payments",
+                element: <Payments />
             }
         ]
       },

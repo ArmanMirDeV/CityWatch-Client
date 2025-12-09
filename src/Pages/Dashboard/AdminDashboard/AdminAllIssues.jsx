@@ -55,6 +55,36 @@ const AdminAllIssues = () => {
         }
     };
 
+    const handleRejectIssue = (issue) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to reject this issue?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, reject it!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await axiosPublic.patch(`/issues/status/${issue._id}`, {
+                        newStatus: 'rejected',
+                        updatedBy: adminUser.email,
+                        staffEmail: adminUser.email // Admin acting as staff/updater
+                    });
+
+                    if (res.data.modifiedCount > 0) {
+                        refetchIssues();
+                        Swal.fire('Rejected!', 'The issue has been rejected.', 'success');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    Swal.fire('Error', 'Failed to reject issue', 'error');
+                }
+            }
+        });
+    };
+
     const openAssignModal = (issue) => {
         setSelectedIssue(issue);
         document.getElementById('assign_modal').showModal();
@@ -70,6 +100,7 @@ const AdminAllIssues = () => {
                         <tr>
                             <th>Title</th>
                             <th>Category</th>
+                            <th>Priority</th>
                             <th>Status</th>
                             <th>Assigned To</th>
                             <th>Action</th>
@@ -84,7 +115,12 @@ const AdminAllIssues = () => {
                                 </td>
                                 <td>{issue.category}</td>
                                 <td>
-                                    <span className={`badge ${issue.status === 'pending' ? 'badge-warning' : issue.status === 'resolved' ? 'badge-success' : 'badge-info'}`}>
+                                    <span className={`badge ${issue.priority === 'high' ? 'badge-error text-white' : 'badge-ghost'} badge-sm`}>
+                                        {issue.priority}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span className={`badge ${issue.status === 'pending' ? 'badge-warning' : issue.status === 'resolved' ? 'badge-success' : issue.status === 'rejected' ? 'badge-error text-white' : 'badge-info'}`}>
                                         {issue.status}
                                     </span>
                                 </td>
@@ -95,10 +131,15 @@ const AdminAllIssues = () => {
                                         <span className="text-gray-400 italic">Unassigned</span>
                                     )}
                                 </td>
-                                <td>
-                                    {!issue.assignedStaff && (
+                                <td className="flex gap-2 items-center">
+                                    {!issue.assignedStaff && issue.status !== 'rejected' && issue.status !== 'resolved' && (
                                         <button onClick={() => openAssignModal(issue)} className="btn text-black btn-xs btn-primary">
                                             <FaUserPlus /> Assign
+                                        </button>
+                                    )}
+                                    {issue.status === 'pending' && (
+                                        <button onClick={() => handleRejectIssue(issue)} className="btn btn-xs btn-error text-white">
+                                            Reject
                                         </button>
                                     )}
                                 </td>

@@ -34,6 +34,7 @@ const AdminDashboard = () => {
                     <li><NavLink to="/dashboard/admin/manage-users"><FaUsers /> Manage Users</NavLink></li>
                     <li><NavLink to="/dashboard/admin/manage-staff"><FaUserShield /> Manage Staff</NavLink></li>
                     <li><NavLink to="/dashboard/admin/all-issues"><FaClipboardList /> All Issues</NavLink></li>
+                    <li><NavLink to="/dashboard/admin/payments"><FaClipboardList /> Payments History</NavLink></li>
                     <li><NavLink to="/dashboard/admin/profile"><FaUsers /> My Profile</NavLink></li>
                     
                     <div className="divider"></div>

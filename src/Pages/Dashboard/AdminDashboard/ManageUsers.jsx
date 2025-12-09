@@ -66,6 +66,7 @@ const ManageUsers = () => {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Subscription</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -78,6 +79,15 @@ const ManageUsers = () => {
                                 <td>{user.email}</td>
                                 <td>
                                     {user.role === 'admin' ? 'Admin' : 'Citizen'}
+                                </td>
+                                <td>
+                                    {user.isPremium ? (
+                                        <div className="tooltip" data-tip={`Since ${new Date(user.premiumAt).toLocaleDateString()}`}>
+                                            <span className="badge badge-accent text-white">Premium</span>
+                                        </div>
+                                    ) : (
+                                        <span className="badge badge-ghost">Free</span>
+                                    )}
                                 </td>
                                 <td>
                                      {user.isBlocked ? <span className="text-red-500 font-bold flex items-center gap-1"><FaBan/> Blocked</span> : <span className="text-green-500 font-bold flex items-center gap-1"><FaCheckCircle/> Active</span>}
