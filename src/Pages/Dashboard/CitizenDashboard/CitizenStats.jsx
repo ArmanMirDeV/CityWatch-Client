@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
-import { FaClipboardList, FaSpinner, FaCheckCircle, FaTimesCircle, FaChartPie } from 'react-icons/fa';
+import { FaClipboardList, FaSpinner, FaCheckCircle, FaTimesCircle, FaChartPie, FaHourglassHalf, FaMoneyBillWave } from 'react-icons/fa';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 const CitizenStats = () => {
@@ -32,7 +32,8 @@ const CitizenStats = () => {
             <h2 className="text-2xl font-bold mb-6 text-gray-800">Dashboard Overview</h2>
             
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-primary">
                     <div className="stat-figure text-primary">
                         <FaClipboardList className="text-3xl" />
@@ -49,6 +50,14 @@ const CitizenStats = () => {
                     <div className="stat-value text-warning">{stats.pending}</div>
                 </div>
 
+                <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-info">
+                    <div className="stat-figure text-info">
+                        <FaHourglassHalf className="text-3xl" />
+                    </div>
+                    <div className="stat-title">In Progress</div>
+                    <div className="stat-value text-info">{stats.inProgress}</div>
+                </div>
+
                  <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-success">
                     <div className="stat-figure text-success">
                         <FaCheckCircle className="text-3xl" />
@@ -63,6 +72,14 @@ const CitizenStats = () => {
                     </div>
                     <div className="stat-title">Closed</div>
                     <div className="stat-value text-error">{stats.closed}</div>
+                </div>
+
+                <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-secondary">
+                    <div className="stat-figure text-secondary">
+                        <FaMoneyBillWave className="text-3xl" />
+                    </div>
+                    <div className="stat-title">Total Payments</div>
+                    <div className="stat-value text-secondary">{stats.totalPayments} BDT</div>
                 </div>
             </div>
 

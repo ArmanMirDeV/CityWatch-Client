@@ -11,38 +11,24 @@ const MyIssues = () => {
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
     const [selectedIssue, setSelectedIssue] = useState(null);
+    const [filterStatus, setFilterStatus] = useState('all');
+    const [filterCategory, setFilterCategory] = useState('all');
 
     const { data: issues = [], isLoading, refetch } = useQuery({
         queryKey: ['myIssues', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-             // Assuming existing getAll API can filter by email or fetching all and filtering here for simplicity if separate API not made.
-             // Actually, the requirement said "List all issues from logged-in user".
-             // We can use the existing /citizen/stats logic or better, create a specific query or use the filter features of GET /issues?search=email? NO, search is text.
-             // Let's rely on fetching all and filtering client side OR make a new endpoint?
-             // Since we didn't plan a new endpoint for LISTING specific user issues in backend plan, I will use /citizen/stats endpoint if it returned issues, but it returns stats object.
-             // Wait, I missed adding a specific endpoint to list user issues in the backend plan.
-             // However, I can reuse the /issues endpoint if I added filter by userEmail? I added search/status/cat/priority.
-             // Let's modify the GET /issues call to support filtering by userEmail if I can, OR just filter client side for now if dataset is small, but that's bad practice.
-             // The implementation plan said: "My Issues Page: List all issues from logged-in user".
-             // I will use client side filtering on the client for now or check if I can quickly add a query param support to backend.
-             // Actually, let's just fetch all issues and filter. Or use the stats endpoint if I modify it? No.
-             // Let's assume I can add userEmail filter to GET /issues quickly or just use client side filtering on the response of GET /issues WITHOUT pagination limit? No, that's heavy.
-             // Re-checking backend code... GET /issues accepts params. I can add userEmail support easily if I edit backend again.
-             // BUT, for now, let's TRY to use CLIENT SIDE filtering on a "fetch all" approach (bad) or better:
-             // Let's use `axiosPublic.get('/issues?limit=1000')` and filter. It's a hack but works for prototype.
-             // ALTERNATIVELY: I see `app.get("/citizen/stats/:email")` fetches all issues for stats. I can just return the issues array too in that endpoint!
-             
-             // Let's use the stats endpoint since it already fetches `find({userEmail: email})`. I will MODIFY the backend to return `issues` list in the stats response or create a new endpoint.
-             // To be clean, I should have a separate endpoint.
-             // Let's just fetch from `/citizen/stats/:email` and I will modify backend to include the full list there, or just add a new `GET /citizen/issues/:email`.
-             // I'll stick to modifying the `GET /citizen/stats/:email` to also return the array of issues, as "stats" usually implies summary.
-             // Actually, I'll just add `app.get('/citizen/issues/:email')` quickly in the next step or use what I have.
-             // Wait, `GET /citizen/stats/:email` in MY previous step does: `const issues = await issuesCollection.find(query).toArray();` then calculates stats. I can just return `issues` in the response too!
-             
              const res = await axiosPublic.get(`/citizen/stats/${user.email}`);
-             return res.data.issuesList; // I need to update backend to return this.
+             return res.data.issuesList; 
         }
+    });
+
+    const categories = [...new Set(issues.map(issue => issue.category))];
+
+    const filteredIssues = issues.filter(issue => {
+        const matchesStatus = filterStatus === 'all' || issue.status === filterStatus;
+        const matchesCategory = filterCategory === 'all' || issue.category === filterCategory;
+        return matchesStatus && matchesCategory;
     });
 
     const handleDelete = (id) => {
@@ -74,6 +60,33 @@ const MyIssues = () => {
     return (
         <div className="p-6">
             <h2 className="text-2xl font-bold mb-6 text-gray-800">My Reported Issues</h2>
+            
+            {/* Filters */}
+            <div className="flex flex-col md:flex-row gap-4 mb-6">
+                <select 
+                    className="select select-bordered w-full md:w-xs"
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                >
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="closed">Closed</option>
+                </select>
+
+                <select 
+                    className="select select-bordered w-full md:w-xs"
+                    value={filterCategory}
+                    onChange={(e) => setFilterCategory(e.target.value)}
+                >
+                    <option value="all">All Categories</option>
+                    {categories.map((cat, idx) => (
+                        <option key={idx} value={cat}>{cat}</option>
+                    ))}
+                </select>
+            </div>
+
             <div className="overflow-x-auto bg-white rounded-xl shadow-md">
                 <table className="table w-full">
                     {/* head */}
@@ -87,10 +100,10 @@ const MyIssues = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {issues.length === 0 ? (
-                            <tr><td colSpan="5" className="text-center py-8 text-gray-400">No issues reported yet.</td></tr>
+                        {filteredIssues.length === 0 ? (
+                            <tr><td colSpan="5" className="text-center py-8 text-gray-400">No issues found.</td></tr>
                         ) : (
-                            issues.map(issue => (
+                            filteredIssues.map(issue => (
                                 <tr key={issue._id} className="hover">
                                     <td>
                                         <div className="font-bold">{issue.title}</div>
@@ -98,7 +111,7 @@ const MyIssues = () => {
                                     </td>
                                     <td>{issue.category}</td>
                                     <td>
-                                        <div className={`badge ${issue.status === 'resolved' ? 'badge-success' : issue.status === 'pending' ? 'badge-warning' : 'badge-neutral'} badge-sm uppercase`}>
+                                        <div className={`badge ${issue.status === 'resolved' ? 'badge-success' : issue.status === 'pending' ? 'badge-warning' : issue.status === 'in-progress' ? 'badge-info' : 'badge-neutral'} badge-sm uppercase`}>
                                             {issue.status}
                                         </div>
                                     </td>
