@@ -1,19 +1,20 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+
 import { FaSearch, FaMoneyBillWave, FaCalendarAlt, FaFileInvoiceDollar } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { downloadInvoice } from '../../../Utils/invoiceGenerator';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const Payments = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('desc'); // desc or asc
 
     const { data: payments = [], isLoading } = useQuery({
         queryKey: ['admin-payments'],
         queryFn: async () => {
-            const res = await axiosPublic.get('/payments');
+            const res = await axiosSecure.get('/payments');
             return res.data;
         }
     });

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { FaUserCircle, FaCrown, FaEnvelope, FaBan, FaEdit, FaSave, FaFileInvoiceDollar } from 'react-icons/fa';
 import { downloadInvoice as downloadInv } from '../../../Utils/invoiceGenerator';
@@ -10,7 +10,7 @@ import SubscriptionModal from '../../../Components/Dashboard/SubscriptionModal';
 
 const UserProfile = () => {
     const { user } = useAuth();
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     
     // Modal State
     const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
@@ -26,7 +26,7 @@ const UserProfile = () => {
         queryKey: ['user', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-             const res = await axiosPublic.get(`/users/${user.email}`);
+             const res = await axiosSecure.get(`/users/${user.email}`);
              return res.data;
         }
     });
@@ -43,7 +43,7 @@ const UserProfile = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         try {
-            const res = await axiosPublic.put(`/users/${user.email}`, {
+            const res = await axiosSecure.put(`/users/${user.email}`, {
                 name: editForm.name,
                 photoURL: editForm.photoURL
             });
@@ -82,7 +82,7 @@ const UserProfile = () => {
                     )}
                     
                     {dbUser?.isPremium && (
-                        <div className="badge badge-warning gap-1 p-3">
+                        <div className="badge h-5 badge-warning gap-1 p-3">
                             <FaCrown className="text-black" /> Premium Member
                         </div>
                     )}
@@ -211,12 +211,12 @@ const UserProfile = () => {
 
 // Sub-component for Payment History
 const PaymentHistory = ({ userEmail }) => {
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     
     const { data: stats = {} } = useQuery({
         queryKey: ['citizenStats', userEmail],
         queryFn: async () => {
-             const res = await axiosPublic.get(`/citizen/stats/${userEmail}`);
+             const res = await axiosSecure.get(`/citizen/stats/${userEmail}`);
              return res.data;
         },
         enabled: !!userEmail

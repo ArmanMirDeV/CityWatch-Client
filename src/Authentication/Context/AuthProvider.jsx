@@ -37,14 +37,51 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
         if (currentUser) {
              setUser(currentUser);
-             setLoading(false);
-             localStorage.removeItem('dbUser'); // Clear DB user if Firebase user exists
+             
+             // Get Token
+             const userInfo = { email: currentUser.email };
+             fetch('http://localhost:3000/jwt', { 
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
+             })
+             .then(res => res.json())
+             .then(data => {
+                 if (data.token) {
+                     localStorage.setItem('access-token', data.token);
+                 }
+                 setLoading(false);
+             })
+             .catch(err => {
+                 console.error("JWT Fetch Error", err);
+                 setLoading(false);
+             });
+
+             localStorage.removeItem('dbUser');
+
         } else {
+             localStorage.removeItem('access-token');
+             
             // Check for persistent DB user if no Firebase user
             const dbUser = localStorage.getItem('dbUser');
             if (dbUser) {
-                setUser(JSON.parse(dbUser));
+                const parsedUser = JSON.parse(dbUser);
+                setUser(parsedUser);
                 setLoading(false);
+                
+                // Refresh token for DB user too if needed (optional, but good practice)
+                 const userInfo = { email: parsedUser.email };
+                 fetch('http://localhost:3000/jwt', { 
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify(userInfo)
+                 })
+                 .then(res => res.json())
+                 .then(data => {
+                     if (data.token) localStorage.setItem('access-token', data.token);
+                 });
             } else {
                 setUser(null);
                 setLoading(false);
@@ -65,12 +102,30 @@ const AuthProvider = ({ children }) => {
   const dbLogin = (userObj) => {
        setUser(userObj);
        localStorage.setItem('dbUser', JSON.stringify(userObj));
-       setLoading(false);
+       
+       // Get Token for DB User
+       const userInfo = { email: userObj.email };
+       fetch('http://localhost:3000/jwt', { 
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(userInfo)
+       })
+       .then(res => res.json())
+       .then(data => {
+            if (data.token) {
+                localStorage.setItem('access-token', data.token);
+            }
+            setLoading(false);
+       })
+       .catch(err => {
+            console.error(err);
+            setLoading(false);
+       });
   }
 
   const logOut = () => {
     setLoading(true);
-    localStorage.removeItem('dbUser'); // Clear DB user on logout
+    localStorage.removeItem('dbUser'); 
     // Also sign out from Firebase just in case
     return signOut(auth).then(() => {
         setUser(null);

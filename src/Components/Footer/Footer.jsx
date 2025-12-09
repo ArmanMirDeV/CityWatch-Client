@@ -11,7 +11,7 @@ import Logo from "../../Components/Logo/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 rounded-2xl text-gray-300 py-12">
+    <footer className="bg-secondary rounded-2xl text-gray-300 py-12">
       <div className="container mx-auto px-4 md:px-8 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo and description */}
         <div>
@@ -42,15 +42,15 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="/how-it-works"
+                href="/top-issues"
                 className="hover:text-white transition-colors"
               >
-                How It Works
+                Top Issues
               </a>
             </li>
             <li>
-              <a href="/contact" className="hover:text-white transition-colors">
-                Contact
+              <a href="/city-map" className="hover:text-white transition-colors">
+                City Map
               </a>
             </li>
           </ul>
@@ -97,7 +97,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Bottom */}
-      <div className="mt-10 border-t border-gray-700 pt-4 text-center text-gray-500 text-sm">
+      <div className="mt-10 border-t border-gray-700 pt-4 text-center text-white text-sm">
         &copy; {new Date().getFullYear()} CityWatch. All rights reserved.
       </div>
     </footer>

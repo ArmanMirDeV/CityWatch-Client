@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +17,7 @@ const ReportIssue = () => {
     formState: { errors },
   } = useForm();
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -26,7 +26,7 @@ const ReportIssue = () => {
     queryKey: ["user", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosPublic.get(`/users/${user.email}`);
+      const res = await axiosSecure.get(`/users/${user.email}`);
       return res.data;
     },
   });
@@ -36,7 +36,7 @@ const ReportIssue = () => {
     queryKey: ["citizenStats", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosPublic.get(`/citizen/stats/${user.email}`);
+      const res = await axiosSecure.get(`/citizen/stats/${user.email}`);
       return res.data;
     },
   });
@@ -72,7 +72,7 @@ const ReportIssue = () => {
       delete issueData.imageFile;
 
       // 3️⃣ Send data to backend
-      const res = await axiosPublic.post("/issues", issueData);
+      const res = await axiosSecure.post("/issues", issueData);
 
       if (res.data.insertedId) {
         reset();
@@ -141,7 +141,7 @@ const ReportIssue = () => {
             You have reached the limit of 3 reported issues for free accounts.
           </p>
           <div className="card-actions justify-center mt-4">
-            <Link to="/dashboard/citizen" className="btn btn-primary">
+            <Link to="/dashboard/citizen" className="btn text-black btn-primary">
               Go to Stats
             </Link>
             <Link to="/dashboard/citizen/profile" className="btn btn-neutral">

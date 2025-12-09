@@ -6,7 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useaxiosSecure from "../../../Hooks/useaxiosSecure";
 import { useMutation } from "@tanstack/react-query";
 
 export default function LogInPage() {
@@ -14,14 +14,14 @@ export default function LogInPage() {
   const { signInUser, signInGoogle, dbLogin } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useaxiosSecure();
 
   const { mutateAsync: saveUser } = useMutation({
     mutationFn: async (user) => {
-        const res = await axiosPublic.post("/users", user);
-        return res.data;
-    }
-  })
+      const res = await axiosSecure.post("/users", user);
+      return res.data;
+    },
+  });
 
   // Email/Password Login
   const onSubmit = async (data) => {
@@ -41,43 +41,49 @@ export default function LogInPage() {
     try {
       // 1. Attempt DB Login (Admin/Staff)
       try {
-           const dbRes = await axiosPublic.post('/auth/login', { 
-               email: data.username, 
-               password: data.password 
-           });
-           
-           if (dbRes.data.success) {
-               dbLogin(dbRes.data.user);
-               Swal.fire({
-                    icon: "success",
-                    title: "Login Successful",
-                    text: `Welcome back, ${dbRes.data.user.name}!`,
-                    timer: 2000,
-                    showConfirmButton: false,
-                }).then(() => {
-                    navigate(dbRes.data.user.role === 'admin' ? '/dashboard/admin' : dbRes.data.user.role === 'staff' ? '/dashboard/staff' : '/'); 
-                });
-                return; // Stop here if DB login works
-           }
+        const dbRes = await axiosSecure.post("/auth/login", {
+          email: data.username,
+          password: data.password,
+        });
+
+        if (dbRes.data.success) {
+          dbLogin(dbRes.data.user);
+          Swal.fire({
+            icon: "success",
+            title: "Login Successful",
+            text: `Welcome back, ${dbRes.data.user.name}!`,
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => {
+            navigate(
+              dbRes.data.user.role === "admin"
+                ? "/dashboard/admin"
+                : dbRes.data.user.role === "staff"
+                ? "/dashboard/staff"
+                : "/"
+            );
+          });
+          return; // Stop here if DB login works
+        }
       } catch (dbError) {
-          // If 401/404, silently fail and try Firebase
-          // console.log("DB Login checked: Not found or invalid. Trying Firebase.");
+        // If 401/404, silently fail and try Firebase
+        // console.log("DB Login checked: Not found or invalid. Trying Firebase.");
       }
 
       // 2. Fallback to Firebase Login (Citizens)
       const result = await signInUser(data.username, data.password);
-      
+
       const userInfo = {
         name: result.user.displayName || data.username,
         email: result.user.email,
         photoURL: result.user.photoURL,
-      }
+      };
       // Ensure citizen exists in DB (sync)
-      await saveUser(userInfo).then(data => {
+      await saveUser(userInfo).then((data) => {
         if (data.insertedId) {
-            console.log("User added to database");
+          console.log("User added to database");
         }
-      })
+      });
 
       Swal.fire({
         icon: "success",
@@ -86,7 +92,7 @@ export default function LogInPage() {
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
-        navigate("/"); 
+        navigate("/");
       });
     } catch (error) {
       console.error("Login Error:", error);
@@ -110,12 +116,12 @@ export default function LogInPage() {
         name: result.user.displayName,
         email: result.user.email,
         photoURL: result.user.photoURL,
-      }
-      await saveUser(userInfo).then(data => {
+      };
+      await saveUser(userInfo).then((data) => {
         if (data.insertedId) {
-            console.log("User added to database");
+          console.log("User added to database");
         }
-      })
+      });
 
       Swal.fire({
         icon: "success",

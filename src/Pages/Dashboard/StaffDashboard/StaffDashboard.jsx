@@ -1,10 +1,16 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router';
-import { FaHome, FaTasks, FaClipboardList, FaBars } from 'react-icons/fa';
+import { NavLink, Outlet, useNavigate } from 'react-router';
+import { FaHome, FaTasks, FaClipboardList, FaBars, FaSignOutAlt } from 'react-icons/fa';
 import useAuth from '../../../Hooks/useAuth';
 
 const StaffDashboard = () => {
-    const { user } = useAuth();
+    const { user, logOut } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logOut();
+        navigate('/');
+    };
     
     return (
         <div className="drawer lg:drawer-open">
@@ -32,10 +38,11 @@ const StaffDashboard = () => {
 
                     <li><NavLink to="/dashboard/staff" end><FaHome /> Overview</NavLink></li>
                     <li><NavLink to="/dashboard/staff/assigned-issues"><FaTasks /> Assigned Issues</NavLink></li>
-                    <li><NavLink to="/dashboard/staff/profile"><FaTasks /> Edit Profile</NavLink></li>
+                    <li><NavLink to="/dashboard/staff/profile"><FaTasks /> Profile</NavLink></li>
                     
                     <div className="divider"></div>
                     <li><NavLink to="/"><FaHome /> Home</NavLink></li>
+                    <li><button onClick={handleLogout} className="text-error"><FaSignOutAlt /> Logout</button></li>
                 </ul>
             </div>
         </div>

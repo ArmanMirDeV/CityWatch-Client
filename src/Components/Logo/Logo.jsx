@@ -25,14 +25,14 @@ const Logo = ({ size = 50, text = "CityWatch" }) => {
       <motion.span
         className="font-extrabold text-2xl bg-clip-text text-transparent"
         style={{
-          backgroundImage: "linear-gradient(90deg, #1E40AF, #FBBF24)",
+          backgroundImage: "linear-gradient(90deg, #1E3A8A, #0F172A)",
         }}
         initial={{ x: -30, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.3, type: "spring", stiffness: 250 }}
         whileHover={{
           scale: 1.1,
-          textShadow: "0px 0px 15px rgba(251,191,36,0.8)",
+          textShadow: "0px 0px 22px rgba(30,58,138,0.8)", // deep indigo glow
         }}
       >
         {text}

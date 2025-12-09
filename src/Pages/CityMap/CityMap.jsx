@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
+import { useQuery } from "@tanstack/react-query";
 
 // Move map to searched location
 function FlyToLocation({ position }) {
@@ -38,26 +39,36 @@ export default function CityMap() {
   }, []);
 
   // Handle Search
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
+  // Search Query for React Query
+  const { data: searchData, refetch, isFetching } = useQuery({
+    queryKey: ["citySearch", searchQuery],
+    enabled: false, // Only run when button clicked (via refetch)
+    queryFn: async () => {
+      if (!searchQuery.trim()) return null;
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery} dhaka`;
+      const res = await fetch(url);
+      return res.json();
+    },
+  });
 
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery} dhaka`;
+  // Handle Search Result
+  useEffect(() => {
+      if (searchData && searchData.length > 0) {
+        setSearchResult({
+            lat: parseFloat(searchData[0].lat),
+            lon: parseFloat(searchData[0].lon),
+            display_name: searchData[0].display_name,
+        });
+      }
+  }, [searchData]);
 
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (data.length > 0) {
-      setSearchResult({
-        lat: parseFloat(data[0].lat),
-        lon: parseFloat(data[0].lon),
-        display_name: data[0].display_name,
-      });
-    }
+  const handleSearch = () => {
+      refetch();
   };
 
   return (
     <div className="w-full py-16 bg-gray-100">
-      <h2 className="text-3xl font-bold text-center mb-6">
+      <h2 className="text-3xl text-blue-800 font-bold text-center mb-6">
          City Map – Search Places
       </h2>
 

@@ -1,18 +1,19 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+
 import { FaClipboardList, FaSpinner, FaCheckCircle, FaTimesCircle, FaChartPie, FaHourglassHalf, FaMoneyBillWave } from 'react-icons/fa';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const CitizenStats = () => {
     const { user } = useAuth();
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
     const { data: stats, isLoading } = useQuery({
         queryKey: ['citizenStats', user?.email],
         queryFn: async () => {
-             const res = await axiosPublic.get(`/citizen/stats/${user.email}`);
+             const res = await axiosSecure.get(`/citizen/stats/${user.email}`);
              return res.data;
         },
         enabled: !!user?.email

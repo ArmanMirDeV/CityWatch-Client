@@ -1,6 +1,7 @@
 import React from 'react';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+
 import StatsCard from '../../../Components/Dashboard/StatsCard';
 import { 
     FaUsers, FaClipboardList, FaCheckCircle, FaHourglassHalf, 
@@ -12,13 +13,13 @@ import {
 import { Link } from 'react-router';
 
 const AdminOverview = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
     // 1. Fetch System Stats
     const { data: stats = {} } = useQuery({
         queryKey: ['admin-stats'],
         queryFn: async () => {
-             const res = await axiosPublic.get('/admin/stats');
+             const res = await axiosSecure.get("/admin/stats");
              return res.data;
         }
     });
@@ -27,7 +28,7 @@ const AdminOverview = () => {
     const { data: latestPayments = [] } = useQuery({
         queryKey: ['latest-payments'],
         queryFn: async () => {
-             const res = await axiosPublic.get('/payments?limit=5');
+             const res = await axiosSecure.get("/payments?limit=5");
              return res.data;
         }
     });
@@ -37,7 +38,7 @@ const AdminOverview = () => {
         queryKey: ['latest-issues'],
         queryFn: async () => {
              // Reusing /issues endpoint, assuming it returns { issues: [...] }
-             const res = await axiosPublic.get('/issues?limit=5');
+             const res = await axiosSecure.get("/issues?limit=5");
              return res.data;
         }
     });
@@ -47,7 +48,7 @@ const AdminOverview = () => {
     const { data: latestUsers = [] } = useQuery({
         queryKey: ['latest-users'],
         queryFn: async () => {
-             const res = await axiosPublic.get('/users?limit=5');
+             const res = await axiosSecure.get('/users?limit=5');
              return res.data;
         }
     });
@@ -217,7 +218,7 @@ const AdminOverview = () => {
                                             </div>
                                         </td>
                                         <td>
-                                           <span className={`badge ${user.role === 'admin' ? 'badge-primary' : 'badge-ghost'} badge-sm`}>{user.role || 'Citizen'}</span>
+                                           <span className={`badge ${user.role === 'admin' ? 'badge-primary text-black' : 'badge-ghost'} badge-sm`}>{user.role || 'Citizen'}</span>
                                         </td>
                                     </tr>
                                 ))}

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+
 import Swal from 'sweetalert2';
 
 const EditIssueModal = ({ issue, onClose, refetch }) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         if (issue) {
@@ -26,7 +26,7 @@ const EditIssueModal = ({ issue, onClose, refetch }) => {
         };
 
         try {
-            const res = await axiosPublic.put(`/issues/${issue._id}`, updateData);
+            const res = await axiosSecure.put(`/issues/${issue._id}`, updateData);
             if (res.data.modifiedCount > 0) {
                 refetch();
                 onClose();

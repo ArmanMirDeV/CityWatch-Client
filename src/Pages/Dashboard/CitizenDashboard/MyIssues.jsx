@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+
 import { Link } from 'react-router';
 import EditIssueModal from './EditIssueModal';
 import Swal from 'sweetalert2';
 import { FaEdit, FaTrash, FaEye } from 'react-icons/fa';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const MyIssues = () => {
     const { user } = useAuth();
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const [selectedIssue, setSelectedIssue] = useState(null);
     const [filterStatus, setFilterStatus] = useState('all');
     const [filterCategory, setFilterCategory] = useState('all');
@@ -18,7 +19,7 @@ const MyIssues = () => {
         queryKey: ['myIssues', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-             const res = await axiosPublic.get(`/citizen/stats/${user.email}`);
+             const res = await axiosSecure.get(`/citizen/stats/${user.email}`);
              return res.data.issuesList; 
         }
     });
@@ -43,7 +44,7 @@ const MyIssues = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axiosPublic.delete(`/issues/${id}`);
+                    const res = await axiosSecure.delete(`/issues/${id}`);
                     if (res.data.deletedCount > 0) {
                         Swal.fire('Deleted!', 'Your issue has been deleted.', 'success');
                         refetch();

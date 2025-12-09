@@ -7,6 +7,8 @@ import Testimonials from "../../../Components/Testimonials/Testimonials";
 import FAQ from "../../../Components/FAQ/FAQ";
 import Awards from "../../../Components/Awards/Awards";
 import CommunityChallenges from "../../../Components/CommunityChallenges/CommunityChallenges";
+import StatsSection from "../../../Components/StatsSection/StatsSection";
+import EmergencyContacts from "../../../Components/EmergencyContacts/EmergencyContacts";
 import LatestResolvedIssues from "../../../Components/LatestResolvedIssues/LatestResolvedIssues";
 
 const Home = () => {
@@ -14,11 +16,13 @@ const Home = () => {
     <div>
       <HeroSection />
       <Banner />
+      <StatsSection />
       <LatestResolvedIssues />
       <HowItWorks />
       <Features />
       <Testimonials />
       <Awards />
+      <EmergencyContacts />
       <CommunityChallenges />
       <FAQ />
     </div>

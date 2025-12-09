@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { FaUserPlus, FaCheckCircle } from 'react-icons/fa';
 import useAuth from '../../../Hooks/useAuth';
 
 const AdminAllIssues = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const { user: adminUser } = useAuth();
     const [selectedIssue, setSelectedIssue] = useState(null);
     const [selectedStaff, setSelectedStaff] = useState("");
@@ -16,7 +16,7 @@ const AdminAllIssues = () => {
         queryKey: ['admin-issues'],
         queryFn: async () => {
         
-            const res = await axiosPublic.get('/issues?limit=50'); // Fetch more for admin view
+            const res = await axiosSecure.get('/issues?limit=50'); // Fetch more for admin view
             return res.data; 
         }
     });
@@ -25,7 +25,7 @@ const AdminAllIssues = () => {
     const { data: staffList = [] } = useQuery({
         queryKey: ['staff-list'],
         queryFn: async () => {
-            const res = await axiosPublic.get('/staff');
+            const res = await axiosSecure.get('/staff');
             return res.data;
         }
     });
@@ -34,7 +34,7 @@ const AdminAllIssues = () => {
         if (!selectedIssue || !selectedStaff) return;
 
         try {
-            const res = await axiosPublic.patch(`/issues/assign/${selectedIssue._id}`, {
+            const res = await axiosSecure.patch(`/issues/assign/${selectedIssue._id}`, {
                 staffEmail: selectedStaff,
                 adminEmail: adminUser.email
             });
@@ -67,10 +67,9 @@ const AdminAllIssues = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axiosPublic.patch(`/issues/status/${issue._id}`, {
+                    const res = await axiosSecure.patch(`/issues/${issue._id}/status`, {
                         newStatus: 'rejected',
                         updatedBy: adminUser.email,
-                        staffEmail: adminUser.email // Admin acting as staff/updater
                     });
 
                     if (res.data.modifiedCount > 0) {

@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useaxiosSecure from "../../../Hooks/useaxiosSecure";
 import { useMutation } from "@tanstack/react-query";
 
 export default function RegistrationForm() {
@@ -15,14 +15,14 @@ export default function RegistrationForm() {
   const { registerUser, signInGoogle, updateUserProfile } =
     useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useaxiosSecure();
 
   const { mutateAsync: saveUser } = useMutation({
     mutationFn: async (user) => {
-        const res = await axiosPublic.post("/users", user);
-        return res.data;
-    }
-  })
+      const res = await axiosSecure.post("/users", user);
+      return res.data;
+    },
+  });
 
   const navigate = useNavigate();
 
@@ -66,21 +66,18 @@ export default function RegistrationForm() {
       const userCredential = await registerUser(data.email, data.password);
 
       // Update Firebase user profile
-      await updateUserProfile(
-        `${data.firstName} ${data.secondName}`,
-        photoURL
-      );
+      await updateUserProfile(`${data.firstName} ${data.secondName}`, photoURL);
 
       const userInfo = {
         name: `${data.firstName} ${data.secondName}`,
         email: data.email,
         photoURL: photoURL,
       };
-      await saveUser(userInfo).then(data => {
+      await saveUser(userInfo).then((data) => {
         if (data.insertedId) {
-            console.log("User added to database");
+          console.log("User added to database");
         }
-      })
+      });
 
       // SweetAlert success
       Swal.fire({
@@ -112,11 +109,11 @@ export default function RegistrationForm() {
         email: result.user.email,
         photoURL: result.user.photoURL,
       };
-      await saveUser(userInfo).then(data => {
+      await saveUser(userInfo).then((data) => {
         if (data.insertedId) {
-            console.log("User added to database");
+          console.log("User added to database");
         }
-      })
+      });
       Swal.fire({
         icon: "success",
         title: "Google Sign-In Successful",

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+
 import Swal from 'sweetalert2';
 import { FaUserShield, FaEnvelope, FaEdit, FaSave } from 'react-icons/fa';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const AdminProfile = () => {
     const { user } = useAuth();
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     
     // Edit Mode State
     const [isEditing, setIsEditing] = useState(false);
@@ -20,7 +21,7 @@ const AdminProfile = () => {
         queryKey: ['admin-user', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-             const res = await axiosPublic.get(`/users/${user.email}`);
+             const res = await axiosSecure.get(`/users/${user.email}`);
              return res.data;
         }
     });
@@ -36,7 +37,7 @@ const AdminProfile = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         try {
-            const res = await axiosPublic.put(`/users/${user.email}`, {
+            const res = await axiosSecure.put(`/users/${user.email}`, {
                 name: editForm.name,
                 photoURL: editForm.photoURL
             });
@@ -74,7 +75,7 @@ const AdminProfile = () => {
                         )
                     )}
                     
-                    <div className="badge badge-primary text-black gap-1 p-3">
+                    <div className="badge h-8 badge-primary text-black gap-1 p-3">
                         <FaUserShield /> Administrator
                     </div>
                 </figure>
@@ -121,7 +122,7 @@ const AdminProfile = () => {
                             </div>
                             <div className="flex justify-end gap-2 mt-4">
                                 <button type="button" className="btn btn-ghost" onClick={() => setIsEditing(false)}>Cancel</button>
-                                <button type="submit" className="btn btn-primary text-white"><FaSave /> Save Changes</button>
+                                <button type="submit" className="btn text-black btn-primary "><FaSave /> Save Changes</button>
                             </div>
                         </form>
                     ) : (

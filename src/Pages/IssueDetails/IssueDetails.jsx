@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
+import { BASE_URL } from "../../Utils/constants";
 import Timeline from "../../Components/Timeline";
 import PaymentModal from "../../Components/PaymentModal";
 import Swal from "sweetalert2";
@@ -15,15 +17,16 @@ import {
   FaEdit,
   FaRocket,
   FaUserTie,
+  FaThumbsUp,
 } from "react-icons/fa";
 import EditIssueModal from "../Dashboard/CitizenDashboard/EditIssueModal";
 
 const IssueDetails = () => {
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [selectedIssue, setSelectedIssue] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedIssue, setSelectedIssue] = useState(null);
 
   const { id } = useParams();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -35,7 +38,7 @@ const IssueDetails = () => {
   } = useQuery({
     queryKey: ["issue", id],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/issues/${id}`);
+      const res = await axios.get(`${BASE_URL}/issues/${id}`);
       return res.data;
     },
   });
@@ -52,7 +55,7 @@ const IssueDetails = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await axiosPublic.delete(`/issues/${id}`);
+          const res = await axiosSecure.delete(`/issues/${id}`);
           if (res.data.deletedCount > 0) {
             Swal.fire("Deleted!", "Your issue has been deleted.", "success");
             navigate("/dashboard/citizen");
@@ -91,6 +94,7 @@ const IssueDetails = () => {
     assignedStaff,
     staffDetails,
     timeline,
+    upvotes,
   } = issue;
   const isOwner = user?.email === userEmail;
 
@@ -131,6 +135,9 @@ const IssueDetails = () => {
             </p>
             <p className="flex items-center gap-1">
               <FaCalendarAlt /> {new Date(createdAt).toLocaleDateString()}
+            </p>
+            <p className="flex items-center gap-1">
+              <FaThumbsUp className="text-blue-500" /> {upvotes?.length || 0}
             </p>
           </div>
         </div>

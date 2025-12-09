@@ -1,11 +1,12 @@
 import axios from "axios";
+import { BASE_URL } from "../Utils/constants";
 
-const axiosPublic = axios.create({
-  baseURL: "http://localhost:3000",
+const axiosSecure = axios.create({
+  baseURL: BASE_URL,
 });
 
-const useAxiosPublic = () => {
-    return axiosPublic;
+const useaxiosSecure = () => {
+  return axiosSecure;
 };
 
-export default useAxiosPublic;
+export default useaxiosSecure;
