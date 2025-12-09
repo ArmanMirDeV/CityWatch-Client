@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
-import { FaUserCircle, FaCrown, FaEnvelope, FaBan, FaEdit, FaSave } from 'react-icons/fa';
+import { FaUserCircle, FaCrown, FaEnvelope, FaBan, FaEdit, FaSave, FaFileInvoiceDollar } from 'react-icons/fa';
+import { downloadInvoice as downloadInv } from '../../../Utils/invoiceGenerator';
 
 import SubscriptionModal from '../../../Components/Dashboard/SubscriptionModal';
 
@@ -186,6 +187,14 @@ const UserProfile = () => {
                             )}
                         </div>
                     )}
+                    
+                    {/* Payment History Section */}
+                    {!isEditing && (
+                        <div className="mt-8">
+                            <h3 className="text-xl font-bold mb-4">Payment History</h3>
+                            <PaymentHistory userEmail={user?.email} />
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -199,5 +208,55 @@ const UserProfile = () => {
         </div>
     );
 };
+
+// Sub-component for Payment History
+const PaymentHistory = ({ userEmail }) => {
+    const axiosPublic = useAxiosPublic();
+    
+    const { data: stats = {} } = useQuery({
+        queryKey: ['citizenStats', userEmail],
+        queryFn: async () => {
+             const res = await axiosPublic.get(`/citizen/stats/${userEmail}`);
+             return res.data;
+        },
+        enabled: !!userEmail
+    });
+
+    const payments = stats.paymentsList || [];
+
+    if (payments.length === 0) return <p className="text-gray-500 italic">No payment history found.</p>;
+
+    return (
+        <div className="overflow-x-auto border rounded-lg">
+            <table className="table w-full">
+                <thead className="bg-base-200">
+                    <tr>
+                        <th>Date</th>
+                        <th>Transaction ID</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {payments.map((payment, idx) => (
+                        <tr key={idx}>
+                            <td>{new Date(payment.date).toLocaleDateString()}</td>
+                            <td className="font-mono text-xs">{payment.transactionId}</td>
+                            <td>{payment.price} BDT</td>
+                            <td>
+                                <button 
+                                    onClick={() => downloadInv(payment)}
+                                    className="btn btn-xs btn-outline btn-info gap-1"
+                                >
+                                    <FaFileInvoiceDollar /> Invoice
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
 
 export default UserProfile;

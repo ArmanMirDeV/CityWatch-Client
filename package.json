@@ -18,6 +18,8 @@
     "daisyui": "^5.5.8",
     "firebase": "^12.6.0",
     "framer-motion": "^12.23.25",
+    "jspdf": "^3.0.4",
+    "jspdf-autotable": "^5.0.2",
     "leaflet": "^1.9.4",
     "localforage": "^1.10.0",
     "lottie-react": "^2.4.1",

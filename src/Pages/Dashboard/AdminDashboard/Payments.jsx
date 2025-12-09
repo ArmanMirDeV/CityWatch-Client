@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
-import { FaSearch, FaMoneyBillWave, FaCalendarAlt } from 'react-icons/fa';
+import { FaSearch, FaMoneyBillWave, FaCalendarAlt, FaFileInvoiceDollar } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { downloadInvoice } from '../../../Utils/invoiceGenerator';
 
 const Payments = () => {
     const axiosPublic = useAxiosPublic();
@@ -127,6 +128,7 @@ const Payments = () => {
                                 <th>Transaction ID</th>
                                 <th>Date</th>
                                 <th>Type</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -140,6 +142,15 @@ const Payments = () => {
                                         <td>{payment.date ? new Date(payment.date).toLocaleDateString() : 'N/A'} {payment.date && new Date(payment.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
                                         <td>
                                             <span className="badge badge-ghost badge-sm">{payment.type || 'Subscription'}</span>
+                                        </td>
+                                        <td>
+                                            <button 
+                                                onClick={() => downloadInvoice(payment)} 
+                                                className="btn btn-sm btn-ghost text-blue-600 tooltip" 
+                                                data-tip="Download Invoice"
+                                            >
+                                                <FaFileInvoiceDollar size={18} />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
