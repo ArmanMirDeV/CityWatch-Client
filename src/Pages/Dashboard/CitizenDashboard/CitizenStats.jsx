@@ -85,6 +85,7 @@ const CitizenStats = () => {
             </div>
 
             {/* Chart Section */}
+            
             <div className="bg-white p-6 rounded-xl shadow-lg h-96 flex flex-col items-center justify-center">
                  <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><FaChartPie/> Issues Status Distribution</h3>
                  {stats.total > 0 ? (

@@ -19,16 +19,12 @@ const StaffProfile = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
 
   // Fetch staff data using React Query
-  const { data: staffData, isLoading } = useQuery({
-    queryKey: ['staffProfile', user?._id],
-    enabled: !!user?._id || !!user?.email, 
+  const { data: staffData, isLoading, refetch } = useQuery({
+    queryKey: ['staffProfile', user?.email],
+    enabled: !!user?.email, 
     queryFn: async () => {
-      const id = user._id; 
-      if (id) {
-           const res = await axiosSecure.get(`/staff/${id}`);
-           return res.data;
-      }
-      return null;
+       const res = await axiosSecure.get(`/staff/email/${user.email}`); 
+       return res.data;
     },
     onSuccess: (data) => {
         if(data) {
@@ -55,7 +51,7 @@ const StaffProfile = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axiosSecure.patch(`/staff/${user._id}`, {
+      const res = await axiosSecure.patch(`/staff/${staffData._id}`, {
         name: data.name,
         email: data.email,
         password: data.password,
@@ -63,6 +59,7 @@ const StaffProfile = () => {
       });
 
       if (res.data.modifiedCount > 0) {
+        refetch();
         Swal.fire({
           title: "Success",
           text: "Profile updated. Please login again if you changed your email.",

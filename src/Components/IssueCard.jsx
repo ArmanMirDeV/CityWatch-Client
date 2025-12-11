@@ -65,10 +65,11 @@ const IssueCard = ({ issue, refetch }) => {
       }
     } catch (error) {
       console.error(error);
+      const errorMessage = error.response?.data?.message || "Something went wrong!";
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Something went wrong!",
+        text: errorMessage,
       });
     }
   };

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const EditIssueModal = ({ issue, onClose, refetch }) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -81,7 +82,7 @@ const EditIssueModal = ({ issue, onClose, refetch }) => {
 
                     <div className="modal-action">
                         <button type="button" className="btn btn-ghost" onClick={onClose}>Cancel</button>
-                        <button type="submit" className="btn btn-primary">Update</button>
+                        <button type="submit" className="btn text-black btn-primary">Update</button>
                     </div>
                  </form>
             </div>
