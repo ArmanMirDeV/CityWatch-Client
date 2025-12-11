@@ -35,7 +35,7 @@ const AssignedIssues = () => {
       const res = await axiosSecure.patch(`/issues/${issue._id}/status`, {
         newStatus,
         updatedBy: user.email,
-        staffEmail: user.email, // for timeline msg
+        staffEmail: user.email, 
       });
 
       if (res.data.modifiedCount > 0) {

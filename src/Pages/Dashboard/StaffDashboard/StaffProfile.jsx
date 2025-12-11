@@ -10,22 +10,20 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const StaffProfile = () => {
   const { user, logOut } = useAuth();
-  const { dbLogin } = useContext(AuthContext); // To update context if needed
+  const { dbLogin } = useContext(AuthContext); 
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  // We need to fetch the full staff object including current password if we want to show it or manage it?
-  // User object in context might be stale if updated properly.
-  // Better fetch fresh data.
+
 
   const { register, handleSubmit, reset, setValue } = useForm();
 
   // Fetch staff data using React Query
   const { data: staffData, isLoading } = useQuery({
     queryKey: ['staffProfile', user?._id],
-    enabled: !!user?._id || !!user?.email, // Fetch if user exists
+    enabled: !!user?._id || !!user?.email, 
     queryFn: async () => {
-      const id = user._id; // prioritizing ID if available from context
+      const id = user._id; 
       if (id) {
            const res = await axiosSecure.get(`/staff/${id}`);
            return res.data;
@@ -42,7 +40,6 @@ const StaffProfile = () => {
     }
   });
 
-  // Effect to set values when data is loaded (since onSuccess is deprecated/removed in v5 sometimes or just better to use effect for form reset)
   useEffect(() => {
       if (staffData) {
           setValue("name", staffData.name);
@@ -71,21 +68,16 @@ const StaffProfile = () => {
           text: "Profile updated. Please login again if you changed your email.",
           icon: "success",
         }).then(async () => {
-          // If email/password changed, maybe force logout?
-          // Or just update local state.
           if (data.email !== user.email) {
             await logOut();
             navigate("/login");
           } else {
-            // Update local context manually for smooth UX
             const updatedUser = {
               ...user,
               name: data.name,
               email: data.email,
               photoURL: data.photoURL,
             };
-            // We don't have a specific updateContext method for DB user without re-login or hack
-            // But if we use dbLogin it overwrites user in state
             dbLogin(updatedUser);
           }
         });
@@ -128,8 +120,8 @@ const StaffProfile = () => {
             <div className="divider my-4"></div>
             
             <div className="w-full text-left space-y-2">
-                 <p className="text-xs text-gray-400 uppercase tracking-wide">User ID</p>
-                 <p className="text-xs font-mono bg-gray-100 p-2 rounded truncate" title={user?._id}>
+                 <p className="text-xs text-black uppercase tracking-wide">User ID</p>
+                 <p className="text-xs text-black font-mono  p-2 rounded truncate" title={user?._id}>
                     {user?._id}
                  </p>
             </div>
