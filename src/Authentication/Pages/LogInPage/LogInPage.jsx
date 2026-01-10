@@ -162,42 +162,11 @@ export default function LogInPage() {
               whileTap={{ scale: 0.95 }}
               type="submit"
               disabled={loading}
-              className="mt-4 w-full btn btn-primary rounded-full shadow-md text-white border-none"
+              className="mt-4 w-full btn btn-primary rounded-full shadow-md text-black border-none"
             >
               {loading ? "Logging in..." : "Login"}
             </motion.button>
-            <div className="flex gap-2 mt-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setValue("username", "citywatch@admin.com");
-                  setValue("password", "Arman0@");
-                }}
-                className="flex-1 btn btn-error btn-sm text-white rounded-lg"
-              >
-                Demo Admin
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setValue("username", "citywatch@citizen.com");
-                  setValue("password", "Arman0@");
-                }}
-                className="flex-1 btn btn-success btn-sm text-white rounded-lg"
-              >
-                Demo Citizen
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setValue("username", "citywatch@staff.com");
-                  setValue("password", "Arman0@");
-                }}
-                className="flex-1 btn btn-warning  btn-sm text-white rounded-lg"
-              >
-                Demo Staff
-              </button>
-            </div>
+           
           </form>
 
           <motion.button
@@ -219,7 +188,7 @@ export default function LogInPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/register")}
-              className="text-sm link link-primary hover:underline"
+              className="text-sm link link-primary text-black hover:underline"
             >
               Don't have an account? Register
             </motion.button>

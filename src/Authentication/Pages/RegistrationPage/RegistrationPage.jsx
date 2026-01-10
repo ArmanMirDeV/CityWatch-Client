@@ -221,7 +221,7 @@ export default function RegistrationForm() {
               whileTap={{ scale: 0.95 }}
               type="submit"
               disabled={loading}
-              className="mt-4 w-full btn btn-primary rounded-full shadow-md text-white border-none"
+              className="mt-4 w-full btn btn-primary rounded-full shadow-md text-black border-none"
             >
               {loading ? "Registering..." : "Register"}
             </motion.button>
@@ -247,7 +247,7 @@ export default function RegistrationForm() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/login")}
-              className="text-sm link link-primary hover:underline"
+              className="text-sm link link-primary text-black hover:underline"
             >
               Already have an account? Login
             </motion.button>
