@@ -60,7 +60,7 @@ const AdminProfile = () => {
 
     return (
         <div className="p-6 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Admin Profile</h2>
+            <h2 className="text-2xl font-bold mb-6 text-base-content">Admin Profile</h2>
             
             <div className="card lg:card-side bg-base-100 shadow-xl border border-base-200">
                 <figure className="p-8 bg-base-200 flex flex-col justify-center items-center lg:w-1/3">
@@ -71,7 +71,7 @@ const AdminProfile = () => {
                         (dbUser?.photoURL || user?.photoURL) ? (
                             <img src={dbUser?.photoURL || user?.photoURL} alt="Admin" className="w-32 h-32 rounded-full border-4 border-white shadow-md mb-4 object-cover" />
                         ) : (
-                            <FaUserShield className="text-9xl text-gray-400 mb-4" />
+                            <FaUserShield className="text-9xl text-base-content/30 mb-4" />
                         )
                     )}
                     
@@ -127,7 +127,7 @@ const AdminProfile = () => {
                         </form>
                     ) : (
                         <div className="mt-2 space-y-3">
-                            <p className="flex items-center gap-2 text-gray-600"><FaEnvelope /> {user?.email}</p>
+                            <p className="flex items-center gap-2 text-base-content/70"><FaEnvelope /> {user?.email}</p>
                             
                             <div className="divider"></div>
                             

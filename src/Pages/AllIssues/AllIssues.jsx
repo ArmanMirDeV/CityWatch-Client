@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import useaxiosSecure from "../../Hooks/useaxiosSecure";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import IssueCard from "../../Components/IssueCard";
 import { FaSearch, FaFilter } from "react-icons/fa";
 
 const AllIssues = () => {
-  const axiosSecure = useaxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const [filterPriority, setFilterPriority] = useState("");
+  const [sortBy, setSortBy] = useState("date_desc");
   const [page, setPage] = useState(1);
   const limit = 6;
 
@@ -31,12 +32,14 @@ const AllIssues = () => {
       filterStatus,
       filterCategory,
       filterPriority,
+      sortBy,
     ],
     queryFn: async () => {
       const params = {
         page,
         limit,
         search: debouncedSearch,
+        sortBy,
         ...(filterStatus && { status: filterStatus }),
         ...(filterCategory && { category: filterCategory }),
         ...(filterPriority && { priority: filterPriority }),
@@ -57,7 +60,7 @@ const AllIssues = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-8 text-blue-800 uppercase tracking-wide">
+      <h1 className="text-3xl font-bold text-center mb-8 text-primary uppercase tracking-wide">
         All Reported Issues
       </h1>
 
@@ -112,17 +115,35 @@ const AllIssues = () => {
               <option value="normal">Normal</option>
               <option value="high">High</option>
             </select>
+
+
+            <select
+              className="select select-bordered w-full md:w-auto"
+              onChange={handleFilterChange(setSortBy)}
+              value={sortBy}
+            >
+              <option value="date_desc">Newest First</option>
+              <option value="date_asc">Oldest First</option>
+              <option value="priority_desc">Priority (High to Low)</option>
+            </select>
           </div>
         </div>
       </div>
 
       {/* Content */}
       {isLoading ? (
-        <div className="flex justify-center items-center h-64">
-          <span className="loading loading-spinner loading-lg text-primary"></span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="card bg-base-100 shadow-xl p-4">
+              <div className="h-48 bg-gray-200 rounded-lg animate-pulse mb-4"></div>
+              <div className="h-6 w-3/4 bg-gray-200 rounded animate-pulse mb-2"></div>
+              <div className="h-4 w-1/2 bg-gray-200 rounded animate-pulse mb-4"></div>
+              <div className="h-8 w-full bg-gray-200 rounded animate-pulse"></div>
+            </div>
+          ))}
         </div>
       ) : issues.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {issues.map((issue) => (
             <IssueCard key={issue._id} issue={issue} refetch={refetch} />
           ))}

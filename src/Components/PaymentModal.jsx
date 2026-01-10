@@ -202,8 +202,8 @@ const PaymentModal = ({ issueId, refetch, userEmail, isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md transform transition-all scale-100 border border-gray-100">
-        <h3 className="text-2xl font-bold text-center mb-6 text-gray-800">
+      <div className="bg-base-100 p-8 rounded-2xl shadow-2xl w-full max-w-md transform transition-all scale-100 border border-base-200">
+        <h3 className="text-2xl font-bold text-center mb-6 text-base-content">
           Boost Issue Priority
         </h3>
 

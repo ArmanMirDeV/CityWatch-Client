@@ -42,8 +42,8 @@ const EditIssueModal = ({ issue, onClose, refetch }) => {
     if (!issue) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg w-full max-w-lg shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center  bg-black/50">
+            <div className="bg-base-100 p-6 rounded-lg w-full max-w-lg shadow-xl">
                  <h3 className="text-xl font-bold mb-4">Edit Issue</h3>
                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                       <div className="form-control">

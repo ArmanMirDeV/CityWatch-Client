@@ -6,15 +6,15 @@ import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router";
-import useaxiosSecure from "../../../Hooks/useaxiosSecure";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useMutation } from "@tanstack/react-query";
 
 export default function LogInPage() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const { signInUser, signInGoogle, dbLogin } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const axiosSecure = useaxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
   const { mutateAsync: saveUser } = useMutation({
     mutationFn: async (user) => {
@@ -117,23 +117,23 @@ export default function LogInPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#d8dae7] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white shadow-xl rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-4xl"
+        className="bg-base-100 shadow-xl rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-4xl"
       >
         {/* LEFT — LOGIN FORM */}
         <div className="w-full md:w-1/2 p-10">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">Login</h1>
+          <h1 className="text-3xl font-bold text-base-content mb-6">Login</h1>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+              <label className="block text-sm font-medium text-base-content/70 mb-1">
                 Username / Email
               </label>
-              <div className="flex items-center gap-3 border-b border-gray-300 py-1 focus-within:border-indigo-500">
-                <FaUserAstronaut className="text-gray-500" />
+              <div className="flex items-center gap-3 border-b border-base-300 py-1 focus-within:border-indigo-500">
+                <FaUserAstronaut className="text-base-content/50" />
                 <input
                   {...register("username", { required: true })}
                   placeholder="Enter username or email"
@@ -143,11 +143,11 @@ export default function LogInPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+              <label className="block text-sm font-medium text-base-content/70 mb-1">
                 Password
               </label>
-              <div className="flex items-center gap-3 border-b border-gray-300 py-1 focus-within:border-indigo-500">
-                <FaLock className="text-gray-500" />
+              <div className="flex items-center gap-3 border-b border-base-300 py-1 focus-within:border-indigo-500">
+                <FaLock className="text-base-content/50" />
                 <input
                   type="password"
                   {...register("password", { required: true })}
@@ -162,10 +162,42 @@ export default function LogInPage() {
               whileTap={{ scale: 0.95 }}
               type="submit"
               disabled={loading}
-              className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-full shadow-md hover:bg-indigo-700 transition"
+              className="mt-4 w-full btn btn-primary rounded-full shadow-md text-white border-none"
             >
               {loading ? "Logging in..." : "Login"}
             </motion.button>
+            <div className="flex gap-2 mt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setValue("username", "citywatch@admin.com");
+                  setValue("password", "Arman0@");
+                }}
+                className="flex-1 btn btn-error btn-sm text-white rounded-lg"
+              >
+                Demo Admin
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setValue("username", "citywatch@citizen.com");
+                  setValue("password", "Arman0@");
+                }}
+                className="flex-1 btn btn-success btn-sm text-white rounded-lg"
+              >
+                Demo Citizen
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setValue("username", "citywatch@staff.com");
+                  setValue("password", "Arman0@");
+                }}
+                className="flex-1 btn btn-warning  btn-sm text-white rounded-lg"
+              >
+                Demo Staff
+              </button>
+            </div>
           </form>
 
           <motion.button
@@ -173,10 +205,10 @@ export default function LogInPage() {
             whileTap={{ scale: 0.95 }}
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="mt-4 w-full flex items-center justify-center gap-3 bg-white border border-gray-300 py-2 rounded-full shadow-sm hover:bg-gray-50 transition"
+            className="mt-4 w-full flex items-center justify-center gap-3 bg-base-100 border border-base-300 py-2 rounded-full shadow-sm hover:bg-base-200 transition"
           >
             <FcGoogle className="text-2xl" />
-            <span className="text-gray-700 text-sm font-medium">
+            <span className="text-base-content text-sm font-medium">
               {loading ? "Processing..." : "Continue with Google"}
             </span>
           </motion.button>
@@ -187,7 +219,7 @@ export default function LogInPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/register")}
-              className="text-sm text-indigo-600 hover:underline"
+              className="text-sm link link-primary hover:underline"
             >
               Don't have an account? Register
             </motion.button>

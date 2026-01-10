@@ -62,7 +62,7 @@ const AdminOverview = () => {
 
     return (
         <div className="w-full p-2">
-            <h2 className="text-3xl font-bold mb-6 text-gray-800">Dashboard Overview</h2>
+            <h2 className="text-3xl font-bold mb-6 text-base-content">Dashboard Overview</h2>
             
             {/* Stats Cards Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
@@ -114,8 +114,8 @@ const AdminOverview = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 
                 {/* Chart Section */}
-                <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
-                    <h3 className="text-xl font-bold mb-4 text-gray-700">Issue Status Distribution</h3>
+                <div className="bg-base-100 p-6 rounded-2xl shadow-xl border border-base-200">
+                    <h3 className="text-xl font-bold mb-4 text-base-content/80">Issue Status Distribution</h3>
                     <div className="h-80 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
@@ -134,10 +134,10 @@ const AdminOverview = () => {
                 </div>
 
                 {/* Latest Payments */}
-                <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex flex-col">
+                <div className="bg-base-100 p-6 rounded-2xl shadow-xl border border-base-200 flex flex-col">
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-xl font-bold text-gray-700">Latest Payments</h3>
-                        <span className="text-sm text-gray-400">Recent 5</span>
+                        <h3 className="text-xl font-bold text-base-content/80">Latest Payments</h3>
+                        <span className="text-sm text-base-content/60">Recent 5</span>
                     </div>
                     <div className="overflow-x-auto flex-1">
                         <table className="table table-zebra w-full">
@@ -157,7 +157,7 @@ const AdminOverview = () => {
                                     </tr>
                                 ))}
                                 {latestPayments.length === 0 && (
-                                    <tr><td colSpan="3" className="text-center text-gray-400">No payments found</td></tr>
+                                    <tr><td colSpan="3" className="text-center text-base-content/50">No payments found</td></tr>
                                 )}
                             </tbody>
                         </table>
@@ -169,9 +169,9 @@ const AdminOverview = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
                 {/* Latest Issues */}
-                <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                <div className="bg-base-100 p-6 rounded-2xl shadow-xl border border-base-200">
                      <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-xl font-bold text-gray-700">Latest Issues</h3>
+                        <h3 className="text-xl font-bold text-base-content/80">Latest Issues</h3>
                         <Link to="/dashboard/admin/all-issues" className="btn btn-xs btn-outline">View All <FaArrowRight/></Link>
                     </div>
                     <ul className="space-y-3">
@@ -180,23 +180,23 @@ const AdminOverview = () => {
                                 <div className="flex items-center gap-3">
                                     <div className={`w-2 h-12 rounded-full ${issue.status === 'resolved' ? 'bg-green-500' : issue.status === 'pending' ? 'bg-amber-500' : 'bg-red-500'}`}></div>
                                     <div>
-                                        <div className="font-bold text-sm truncate w-40 md:w-60">{issue.title}</div>
-                                        <div className="text-xs text-gray-500">{new Date(issue.createdAt).toLocaleDateString()} • {issue.status}</div>
+                                        <div className="font-bold text-sm truncate w-40 md:w-60 text-base-content">{issue.title}</div>
+                                        <div className="text-xs text-base-content/60">{new Date(issue.createdAt).toLocaleDateString()} • {issue.status}</div>
                                     </div>
                                 </div>
                                 <div className="badge badge-sm">{issue.category}</div>
                             </li>
                         ))}
                          {latestIssues.length === 0 && (
-                            <li className="text-center text-gray-400 py-4">No issues found</li>
+                            <li className="text-center text-base-content/50 py-4">No issues found</li>
                         )}
                     </ul>
                 </div>
 
                 {/* Latest Users */}
-                 <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                 <div className="bg-base-100 p-6 rounded-2xl shadow-xl border border-base-200">
                      <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-xl font-bold text-gray-700">New Users</h3>
+                        <h3 className="text-xl font-bold text-base-content/80">New Users</h3>
                          <Link to="/dashboard/admin/manage-users" className="btn btn-xs btn-outline">View All <FaArrowRight/></Link>
                     </div>
                      <div className="overflow-x-auto">
@@ -212,8 +212,8 @@ const AdminOverview = () => {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold">{user.name}</div>
-                                                    <div className="text-sm opacity-50">{user.email}</div>
+                                                    <div className="font-bold text-base-content">{user.name}</div>
+                                                    <div className="text-sm opacity-50 text-base-content/60">{user.email}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -223,7 +223,7 @@ const AdminOverview = () => {
                                     </tr>
                                 ))}
                                  {latestUsers.length === 0 && (
-                                    <tr><td colSpan="2" className="text-center text-gray-400">No users found</td></tr>
+                                    <tr><td colSpan="2" className="text-center text-base-content/50">No users found</td></tr>
                                 )}
                             </tbody>
                         </table>

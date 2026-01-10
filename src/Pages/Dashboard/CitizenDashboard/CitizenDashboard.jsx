@@ -21,7 +21,7 @@ const CitizenDashboard = () => {
     ];
 
     return (
-        <div className="drawer lg:drawer-open min-h-screen bg-gray-50">
+        <div className="drawer lg:drawer-open min-h-screen bg-base-200">
             <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" checked={isSidebarOpen} onChange={() => setIsSidebarOpen(!isSidebarOpen)} />
             
             <div className="drawer-content flex flex-col">
@@ -46,7 +46,7 @@ const CitizenDashboard = () => {
                 <ul className="menu p-4 w-72 h-full bg-base-100 text-base-content border-r border-base-200">
                     <div className="mb-8 px-4 py-2">
                         <h2 className="text-2xl font-extrabold text-primary tracking-tighter">CityWatch</h2>
-                        <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Citizen Panel</p>
+                        <p className="text-xs text-base-content/50 uppercase tracking-widest mt-1">Citizen Panel</p>
                     </div>
 
                     {navLinks.map((link) => (
@@ -56,7 +56,7 @@ const CitizenDashboard = () => {
                                 end={link.end}
                                 onClick={() => setIsSidebarOpen(false)}
                                 className={({ isActive }) => 
-                                    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-primary  text-black shadow-md' : 'hover:bg-gray-100 text-gray-600'}`
+                                    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-primary  text-primary-content shadow-md' : 'hover:bg-base-200 text-base-content/70'}`
                                 }
                             >
                                 {link.icon}

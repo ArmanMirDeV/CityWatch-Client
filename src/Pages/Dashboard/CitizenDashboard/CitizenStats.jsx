@@ -30,12 +30,12 @@ const CitizenStats = () => {
 
     return (
         <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Dashboard Overview</h2>
+            <h2 className="text-2xl font-bold mb-6 text-base-content">Dashboard Overview</h2>
             
             {/* Stats Cards */}
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-primary">
+                <div className="stat bg-base-100 shadow-lg rounded-xl border-l-4 border-primary">
                     <div className="stat-figure text-primary">
                         <FaClipboardList className="text-3xl" />
                     </div>
@@ -43,7 +43,7 @@ const CitizenStats = () => {
                     <div className="stat-value text-primary">{stats.total}</div>
                 </div>
                 
-                 <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-warning">
+                 <div className="stat bg-base-100 shadow-lg rounded-xl border-l-4 border-warning">
                     <div className="stat-figure text-warning">
                         <FaSpinner className="text-3xl" />
                     </div>
@@ -51,7 +51,7 @@ const CitizenStats = () => {
                     <div className="stat-value text-warning">{stats.pending}</div>
                 </div>
 
-                <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-info">
+                <div className="stat bg-base-100 shadow-lg rounded-xl border-l-4 border-info">
                     <div className="stat-figure text-info">
                         <FaHourglassHalf className="text-3xl" />
                     </div>
@@ -59,7 +59,7 @@ const CitizenStats = () => {
                     <div className="stat-value text-info">{stats.inProgress}</div>
                 </div>
 
-                 <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-success">
+                 <div className="stat bg-base-100 shadow-lg rounded-xl border-l-4 border-success">
                     <div className="stat-figure text-success">
                         <FaCheckCircle className="text-3xl" />
                     </div>
@@ -67,7 +67,7 @@ const CitizenStats = () => {
                     <div className="stat-value text-success">{stats.resolved}</div>
                 </div>
 
-                <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-error">
+                <div className="stat bg-base-100 shadow-lg rounded-xl border-l-4 border-error">
                     <div className="stat-figure text-error">
                         <FaTimesCircle className="text-3xl" />
                     </div>
@@ -75,7 +75,7 @@ const CitizenStats = () => {
                     <div className="stat-value text-error">{stats.closed}</div>
                 </div>
 
-                <div className="stat bg-white shadow-lg rounded-xl border-l-4 border-secondary">
+                <div className="stat bg-base-100 shadow-lg rounded-xl border-l-4 border-secondary">
                     <div className="stat-figure text-secondary">
                         <FaMoneyBillWave className="text-3xl" />
                     </div>
@@ -86,8 +86,8 @@ const CitizenStats = () => {
 
             {/* Chart Section */}
             
-            <div className="bg-white p-6 rounded-xl shadow-lg h-96 flex flex-col items-center justify-center">
-                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><FaChartPie/> Issues Status Distribution</h3>
+            <div className="bg-base-100 p-6 rounded-xl shadow-lg h-96 flex flex-col items-center justify-center">
+                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-base-content"><FaChartPie/> Issues Status Distribution</h3>
                  {stats.total > 0 ? (
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>

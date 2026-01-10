@@ -11,12 +11,12 @@ import Logo from "../../Components/Logo/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary rounded-2xl text-gray-300 py-12">
+    <footer className="bg-neutral text-neutral-content rounded-2xl py-12">
       <div className="container mx-auto px-4 md:px-8 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo and description */}
         <div>
-          <Logo size={50} text="CityWatch" />
-          <p className="mt-4 text-gray-400">
+          <Logo size={50} text="CityWatch" textColor="text-neutral-content" />
+          <p className="mt-4 text-neutral-content/80">
             CityWatch helps citizens report public infrastructure issues quickly
             and track their resolution efficiently. Improving city services, one
             report at a time.
@@ -25,17 +25,17 @@ const Footer = () => {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-white font-bold text-lg mb-4">Quick Links</h3>
+          <h3 className="text-neutral-content font-bold text-lg mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <a href="/" className="hover:text-white transition-colors">
+              <a href="/" className="hover:text-primary transition-colors">
                 Home
               </a>
             </li>
             <li>
               <a
                 href="/all-issues"
-                className="hover:text-white transition-colors"
+                className="hover:text-primary transition-colors"
               >
                 All Issues
               </a>
@@ -43,13 +43,13 @@ const Footer = () => {
             <li>
               <a
                 href="/top-issues"
-                className="hover:text-white transition-colors"
+                className="hover:text-primary transition-colors"
               >
                 Top Issues
               </a>
             </li>
             <li>
-              <a href="/city-map" className="hover:text-white transition-colors">
+              <a href="/city-map" className="hover:text-primary transition-colors">
                 City Map
               </a>
             </li>
@@ -58,37 +58,37 @@ const Footer = () => {
 
         {/* Contact & Social Media */}
         <div>
-          <h3 className="text-white font-bold text-lg mb-4">Contact</h3>
+          <h3 className="text-neutral-content font-bold text-lg mb-4">Contact</h3>
           <p>Email: support@citywatch.com</p>
           <p>Phone: +880 123 456 789</p>
           <div className="flex gap-4 mt-4">
             <a
               href="https://www.facebook.com/Arman.Mir.8583"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-neutral-content hover:text-primary transition-colors"
             >
               <FaFacebookF size={20} />
             </a>
             <a
               href="#"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-neutral-content hover:text-primary transition-colors"
             >
               <FaTwitter size={20} />
             </a>
             <a
               href="https://www.instagram.com/arman_mir_8583/"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-neutral-content hover:text-primary transition-colors"
             >
               <FaInstagram size={20} />
             </a>
             <a
               href="https://www.linkedin.com/in/armanmirdev/"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-neutral-content hover:text-primary transition-colors"
             >
               <FaLinkedinIn size={20} />
             </a>
             <a
               href="https://github.com/ArmanMirDeV"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-neutral-content hover:text-primary transition-colors"
             >
               <FaGithub size={20} />
             </a>
@@ -97,7 +97,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Bottom */}
-      <div className="mt-10 border-t border-gray-700 pt-4 text-center text-white text-sm">
+      <div className="mt-10 border-t border-neutral-content/20 pt-4 text-center text-neutral-content/60 text-sm">
         &copy; {new Date().getFullYear()} CityWatch. All rights reserved.
       </div>
     </footer>

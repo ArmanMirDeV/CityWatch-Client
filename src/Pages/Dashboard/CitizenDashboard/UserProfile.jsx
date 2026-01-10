@@ -66,7 +66,7 @@ const UserProfile = () => {
 
     return (
         <div className="p-6 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">My Profile</h2>
+            <h2 className="text-2xl font-bold mb-6 text-base-content">My Profile</h2>
             
             <div className="card lg:card-side bg-base-100 shadow-xl border border-base-200">
                 <figure className="p-8 bg-base-200 flex flex-col justify-center items-center lg:w-1/3">
@@ -77,7 +77,7 @@ const UserProfile = () => {
                         (dbUser?.photoURL || user?.photoURL) ? (
                             <img src={dbUser?.photoURL || user?.photoURL} alt="User" className="w-32 h-32 rounded-full border-4 border-white shadow-md mb-4 object-cover" />
                         ) : (
-                            <FaUserCircle className="text-9xl text-gray-400 mb-4" />
+                            <FaUserCircle className="text-9xl text-base-content/30 mb-4" />
                         )
                     )}
                     
@@ -95,7 +95,7 @@ const UserProfile = () => {
                              {isEditing ? 'Edit Profile' : (dbUser?.name || user?.displayName)}
                         </h2>
                         {!isEditing && (
-                            <button onClick={startEditing} className="btn btn-ghost btn-sm text-black">
+                            <button onClick={startEditing} className="btn btn-ghost btn-sm text-base-content">
                                 <FaEdit /> Edit
                             </button>
                         )}
@@ -135,7 +135,7 @@ const UserProfile = () => {
                         </form>
                     ) : (
                         <div className="mt-2 space-y-3">
-                            <p className="flex items-center gap-2 text-gray-600"><FaEnvelope /> {user?.email}</p>
+                            <p className="flex items-center gap-2 text-base-content/70"><FaEnvelope /> {user?.email}</p>
                             
                             <div className="divider"></div>
                             
@@ -153,7 +153,7 @@ const UserProfile = () => {
                                     {dbUser?.isPremium ? (
                                         <span className="text-warning font-bold flex items-center gap-1"><FaCrown /> Premium</span>
                                     ) : (
-                                        <span className="text-gray-500">Free Tier (Limit 3 issues)</span>
+                                        <span className="text-base-content/60">Free Tier (Limit 3 issues)</span>
                                     )}
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -172,7 +172,7 @@ const UserProfile = () => {
                                     <div className="flex flex-col md:flex-row justify-between items-center w-full">
                                         <div>
                                              <h4 className="font-bold">Upgrade to Premium</h4>
-                                             <p className="text-sm text-gray-500">Unlock unlimited issue reporting and priority support.</p>
+                                             <p className="text-sm text-base-content/60">Unlock unlimited issue reporting and priority support.</p>
                                         </div>
                                         <button className="btn btn-primary text-black mt-3 md:mt-0" onClick={() => setIsSubscriptionModalOpen(true)}>
                                             Subscribe (1000 TK)
@@ -224,7 +224,7 @@ const PaymentHistory = ({ userEmail }) => {
 
     const payments = stats.paymentsList || [];
 
-    if (payments.length === 0) return <p className="text-gray-500 italic">No payment history found.</p>;
+    if (payments.length === 0) return <p className="text-base-content/50 italic">No payment history found.</p>;
 
     return (
         <div className="overflow-x-auto border rounded-lg">

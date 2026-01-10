@@ -75,7 +75,7 @@ const IssueCard = ({ issue, refetch }) => {
   };
 
   return (
-    <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
       <figure className="relative h-48 overflow-hidden">
         <img
           src={img || image}
@@ -103,23 +103,23 @@ const IssueCard = ({ issue, refetch }) => {
       </figure>
       <div className="card-body p-4">
         <div className="flex justify-between items-start">
-          <p className="text-sm text-gray-500 font-semibold uppercase tracking-wider">
+          <p className="text-sm text-base-content/60 font-semibold uppercase tracking-wider">
             {category}
           </p>
-          <p className="text-xs text-gray-400 flex items-center gap-1">
+          <p className="text-xs text-base-content/40 flex items-center gap-1">
             <FaCalendarAlt /> {new Date(createdAt).toLocaleDateString()}
           </p>
         </div>
 
         <h2
-          className="card-title text-xl font-bold text-gray-800 line-clamp-1"
+          className="card-title text-xl font-bold text-base-content line-clamp-1"
           title={title}
         >
           {title}
         </h2>
-        <p className="text-gray-600 text-sm line-clamp-2">{description}</p>
+        <p className="text-base-content/70 text-sm line-clamp-2">{description}</p>
 
-        <div className="flex items-center gap-1 text-gray-500 text-sm mt-2">
+        <div className="flex items-center gap-1 text-base-content/60 text-sm mt-2">
           <FaMapMarkerAlt className="text-primary" />
           <span className="truncate">{location}</span>
         </div>

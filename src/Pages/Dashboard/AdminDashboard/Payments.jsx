@@ -62,19 +62,19 @@ const Payments = () => {
 
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="stat bg-white shadow-lg rounded-2xl border border-gray-100">
+                <div className="stat bg-base-100 shadow-lg rounded-2xl border border-base-200">
                     <div className="stat-title">Total Transactions</div>
                     <div className="stat-value">{payments.length}</div>
                 </div>
-                <div className="stat bg-white shadow-lg rounded-2xl border border-gray-100">
+                <div className="stat bg-base-100 shadow-lg rounded-2xl border border-base-200">
                     <div className="stat-title">Total Revenue</div>
                     <div className="stat-value text-green-600">{totalRevenue.toLocaleString()} BDT</div>
                 </div>
             </div>
 
             {/* Chart Section */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mb-8">
-                <h3 className="text-xl font-bold mb-4 text-gray-700">Monthly Revenue</h3>
+            <div className="bg-base-100 p-6 rounded-2xl shadow-lg border border-base-200 mb-8">
+                <h3 className="text-xl font-bold mb-4 text-base-content/80">Monthly Revenue</h3>
                 <div className="h-80 w-full">
                      <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={chartData}>
@@ -90,7 +90,7 @@ const Payments = () => {
             </div>
 
             {/* Table and Filters Section */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 overflow-hidden">
+            <div className="bg-base-100 rounded-2xl shadow-lg border border-base-200 p-6 overflow-hidden">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <h3 className="text-lg font-bold">Transaction List</h3>
                     
@@ -121,7 +121,7 @@ const Payments = () => {
 
                 <div className="overflow-x-auto">
                     <table className="table w-full">
-                        <thead className="bg-gray-50">
+                        <thead className="bg-base-200">
                             <tr>
                                 <th>#</th>
                                 <th>Email</th>
@@ -157,7 +157,7 @@ const Payments = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-8 text-gray-400">
+                                    <td colSpan="6" className="text-center py-8 text-base-content/40">
                                         No payments found regardless of filter.
                                     </td>
                                 </tr>

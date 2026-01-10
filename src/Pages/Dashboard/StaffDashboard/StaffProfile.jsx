@@ -88,12 +88,12 @@ const StaffProfile = () => {
   };
 
   return (
-    <div className="w-full p-4 md:p-10 bg-gray-50 min-h-screen">
+    <div className="w-full p-4 md:p-10 bg-base-200 min-h-screen">
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         
         {/* Profile Info Card */}
         <div className="md:col-span-1">
-          <div className="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center border border-gray-100">
+          <div className="bg-base-100 shadow-xl rounded-2xl p-6 flex flex-col items-center text-center border border-base-200">
             <div className="avatar mb-4">
               <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <img
@@ -106,10 +106,10 @@ const StaffProfile = () => {
                 />
               </div>
             </div>
-            <h2 className="text-xl font-bold text-gray-800">
+            <h2 className="text-xl font-bold text-base-content">
               {staffData?.name || user?.displayName}
             </h2>
-            <p className="text-sm text-gray-500 mb-2">{staffData?.email || user?.email}</p>
+            <p className="text-sm text-base-content/60 mb-2">{staffData?.email || user?.email}</p>
             <div className="badge badge-primary badge-outline mt-2 uppercase font-bold text-xs">
               Staff Member
             </div>
@@ -117,8 +117,8 @@ const StaffProfile = () => {
             <div className="divider my-4"></div>
             
             <div className="w-full text-left space-y-2">
-                 <p className="text-xs text-black uppercase tracking-wide">User ID</p>
-                 <p className="text-xs text-black font-mono  p-2 rounded truncate" title={user?._id}>
+                 <p className="text-xs text-base-content uppercase tracking-wide">User ID</p>
+                 <p className="text-xs text-base-content font-mono  p-2 rounded truncate" title={user?._id}>
                     {user?._id}
                  </p>
             </div>
@@ -127,8 +127,8 @@ const StaffProfile = () => {
 
         {/* Update Form */}
         <div className="md:col-span-2">
-          <div className="bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">
+          <div className="bg-base-100 shadow-xl rounded-2xl p-8 border border-base-200">
+            <h2 className="text-2xl font-bold mb-6 text-base-content border-b pb-4">
               Update Profile
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -152,7 +152,7 @@ const StaffProfile = () => {
                   type="email"
                   {...register("email")}
                   disabled
-                  className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
+                  className="input input-bordered w-full bg-base-200 cursor-not-allowed"
                 />
               </div>
 

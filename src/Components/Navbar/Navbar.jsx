@@ -1,14 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router";
 import Logo from "../Logo/Logo";
+import { FaSun, FaMoon } from "react-icons/fa";
 import { AuthContext } from "../../Authentication/Context/AuthContext";
 import useRole from "../../Hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [role] = useRole();
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    const localTheme = localStorage.getItem("theme");
+    document.querySelector("html").setAttribute("data-theme", localTheme);
+  }, [theme]);
+
+  const handleToggle = (e) => {
+    if (e.target.checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   const dashboardPath = role === 'admin' ? '/dashboard/admin' : role === 'staff' ? '/dashboard/staff' : '/dashboard/citizen';
 
@@ -105,6 +124,18 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
+            {/* Theme Toggle Mobile */}
+            <li className="flex justify-center mt-2">
+              <label className="swap swap-rotate">
+                <input
+                  type="checkbox"
+                  onChange={handleToggle}
+                  checked={theme === "light" ? false : true}
+                />
+                <FaSun className="swap-on fill-current w-6 h-6 text-yellow-500" />
+                <FaMoon className="swap-off fill-current w-6 h-6 text-gray-500" />
+              </label>
+            </li>
           </ul>
         </div>
 
@@ -119,7 +150,7 @@ const Navbar = () => {
 
       {/* Navbar Center (Desktop Menu) */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 font-semibold text-gray-700">
+        <ul className="menu menu-horizontal px-1 font-semibold text-base-content/80">
           {menuItems.map((item) => (
             <li key={item.name}>
               <NavLink
@@ -155,16 +186,16 @@ const Navbar = () => {
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-52 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
-                <div className="px-4 py-2 border-b border-gray-100">
-                  <p className="font-semibold">{user.displayName}</p>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+              <div className="absolute right-0 mt-2 w-52 bg-base-100 shadow-lg rounded-lg border border-base-200 z-50">
+                <div className="px-4 py-2 border-b border-base-200">
+                  <p className="font-semibold text-base-content">{user.displayName}</p>
+                  <p className="text-sm text-base-content/60">{user.email}</p>
                 </div>
                 <ul className="flex flex-col">
                   <li>
                     <NavLink
                       to={dashboardPath}
-                      className="block px-4 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-base-200 text-base-content"
                       onClick={() => setDropdownOpen(false)}
                     >
                       Dashboard
@@ -173,7 +204,7 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                      className="w-full text-left px-4 py-2 hover:bg-base-200 text-base-content"
                     >
                       Logout
                     </button>
@@ -183,6 +214,18 @@ const Navbar = () => {
             )}
           </div>
         )}
+      </div>
+      {/* Theme Toggle Desktop */}
+      <div className="hidden lg:flex ml-4">
+        <label className="swap swap-rotate">
+          <input
+            type="checkbox"
+            onChange={handleToggle}
+            checked={theme === "light" ? false : true}
+          />
+          <FaSun className="swap-on fill-current w-6 h-6 text-yellow-500" />
+          <FaMoon className="swap-off fill-current w-6 h-6 text-gray-500" />
+        </label>
       </div>
     </div>
   );

@@ -60,7 +60,7 @@ const MyIssues = () => {
 
     return (
         <div className="p-6">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">My Reported Issues</h2>
+            <h2 className="text-2xl font-bold mb-6 text-base-content">My Reported Issues</h2>
             
             {/* Filters */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -88,7 +88,7 @@ const MyIssues = () => {
                 </select>
             </div>
 
-            <div className="overflow-x-auto bg-white rounded-xl shadow-md">
+            <div className="overflow-x-auto bg-base-100 rounded-xl shadow-md">
                 <table className="table w-full">
                     {/* head */}
                     <thead className="bg-base-200">
@@ -102,7 +102,7 @@ const MyIssues = () => {
                     </thead>
                     <tbody>
                         {filteredIssues.length === 0 ? (
-                            <tr><td colSpan="5" className="text-center py-8 text-gray-400">No issues found.</td></tr>
+                            <tr><td colSpan="5" className="text-center py-8 text-base-content/40">No issues found.</td></tr>
                         ) : (
                             filteredIssues.map(issue => (
                                 <tr key={issue._id} className="hover">

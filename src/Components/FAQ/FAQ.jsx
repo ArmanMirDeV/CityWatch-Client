@@ -38,25 +38,25 @@ const FAQ = () => {
   };
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-base-200">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-blue-900 text-center mb-12">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-base-content text-center mb-12">
           Frequently Asked Questions
         </h2>
         <div className="space-y-4 max-w-3xl mx-auto">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer"
+              className="bg-base-100 rounded-xl shadow-lg overflow-hidden cursor-pointer"
             >
               <div
                 className="flex justify-between items-center px-6 py-4"
                 onClick={() => toggleFAQ(index)}
               >
-                <h3 className="text-lg md:text-xl font-semibold text-gray-800">
+                <h3 className="text-lg md:text-xl font-semibold text-base-content">
                   {faq.question}
                 </h3>
-                <span className="text-blue-600 text-2xl">
+                <span className="text-primary text-2xl">
                   {openIndex === index ? <FiMinus /> : <FiPlus />}
                 </span>
               </div>
@@ -67,7 +67,7 @@ const FAQ = () => {
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="px-6 py-4 text-gray-600"
+                    className="px-6 py-4 text-base-content/70"
                   >
                     {faq.answer}
                   </motion.div>

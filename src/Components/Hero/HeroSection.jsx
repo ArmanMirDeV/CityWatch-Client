@@ -4,12 +4,12 @@ import heroImage from "../../assets/hero-city.png";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gray-50">
+    <section className="relative bg-base-200">
       <div className="container mx-auto px-4 md:px-8 lg:px-16 py-16 flex flex-col-reverse md:flex-row items-center gap-10">
         {/* Text Content */}
         <div className="flex-1">
           <motion.h1
-            className="text-4xl md:text-5xl font-extrabold text-blue-900 mb-6"
+            className="text-4xl md:text-5xl font-extrabold text-base-content mb-6"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -18,7 +18,7 @@ const HeroSection = () => {
           </motion.h1>
 
           <motion.p
-            className="text-gray-700 mb-6 text-lg md:text-xl"
+            className="text-base-content/80 mb-6 text-lg md:text-xl"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -29,7 +29,7 @@ const HeroSection = () => {
           </motion.p>
 
           <motion.ul
-            className="text-gray-700 mb-8 space-y-2 list-disc list-inside text-lg md:text-xl"
+            className="text-base-content/80 mb-8 space-y-2 list-disc list-inside text-lg md:text-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}

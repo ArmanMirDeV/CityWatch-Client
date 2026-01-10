@@ -160,9 +160,9 @@ const ManageStaff = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto bg-white rounded-lg shadow-xl border border-gray-100">
+      <div className="overflow-x-auto bg-base-100 rounded-lg shadow-xl border border-base-200">
         <table className="table w-full">
-          <thead className="bg-base-200">
+          <thead className="bg-base-200 text-base-content/80">
             <tr>
               <th>#</th>
               <th>Staff Info</th>
@@ -197,7 +197,7 @@ const ManageStaff = () => {
                 </td>
                 <td>
                   <div className="text-sm">{member.email}</div>
-                  <div className="text-xs text-gray-500">{member.phone}</div>
+                  <div className="text-xs text-base-content/60">{member.phone}</div>
                 </td>
                 <td>
                   <span className="badge badge-accent text-white">Staff</span>
@@ -222,7 +222,7 @@ const ManageStaff = () => {
             ))}
             {staff.length === 0 && (
               <tr>
-                <td colSpan="5" className="text-center py-8 text-gray-400">
+                <td colSpan="5" className="text-center py-8 text-base-content/40">
                   No staff members found.
                 </td>
               </tr>
@@ -355,10 +355,10 @@ const ManageStaff = () => {
                 <input
                   type="email"
                   {...registerUpdate("email")}
-                  className="input input-bordered bg-gray-100"
+                  className="input input-bordered bg-base-200"
                   readOnly
                 />
-                <span className="text-xs text-gray-400 mt-1">
+                <span className="text-xs text-base-content/40 mt-1">
                   Email cannot be changed directly
                 </span>
               </div>

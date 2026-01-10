@@ -154,8 +154,8 @@ const ReportIssue = () => {
   }
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white rounded-xl shadow-md my-8">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+    <div className="p-6 max-w-3xl mx-auto bg-base-100 rounded-xl shadow-md my-8">
+      <h2 className="text-2xl font-bold mb-6 text-center text-base-content">
         Report a New Issue
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

@@ -40,10 +40,10 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-base-200">
       <div className="container mx-auto px-4 md:px-8 lg:px-16 text-center">
         <motion.h2
-          className="text-4xl md:text-5xl font-extrabold text-blue-900 mb-8"
+          className="text-4xl md:text-5xl font-extrabold text-base-content mb-8"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -55,7 +55,7 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition-transform cursor-pointer"
+              className="bg-base-100 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center hover:scale-105 transition-transform cursor-pointer"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.8 }}
@@ -65,10 +65,10 @@ const HowItWorks = () => {
               >
                 {step.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
+              <h3 className="text-xl font-bold text-base-content mb-2">
                 {step.title}
               </h3>
-              <p className="text-gray-600">{step.description}</p>
+              <p className="text-base-content/70">{step.description}</p>
             </motion.div>
           ))}
         </div>

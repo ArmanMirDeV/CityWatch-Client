@@ -85,8 +85,8 @@ const Banner = () => {
         <Link to="/all-issues">
           <button
             className="
-              px-6 py-3 rounded-full border border-gray-400 text-primary font-medium
-              hover:bg-black transition-all cursor-pointer
+              px-6 py-3 rounded-full border border-base-300 text-primary font-medium
+              hover:bg-neutral transition-all cursor-pointer
               sm:px-4 sm:py-2 sm:text-sm
             "
           >

@@ -67,9 +67,9 @@ const ManageUsers = () => {
   return (
     <div className="w-full">
       <h2 className="text-3xl font-bold my-4">Manage Users: {users.length}</h2>
-      <div className="overflow-x-auto bg-white rounded-lg shadow-xl">
+      <div className="overflow-x-auto bg-base-100 rounded-lg shadow-xl">
         <table className="table w-full">
-          <thead className="bg-gray-200">
+          <thead className="bg-base-200 text-base-content/80">
             <tr>
               <th>#</th>
               <th>Name</th>

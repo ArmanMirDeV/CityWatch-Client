@@ -55,7 +55,7 @@ const AssignedIssues = () => {
       </h2>
 
       {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+      <div className="flex flex-col md:flex-row gap-4 mb-6 bg-base-100 p-4 rounded-xl shadow-sm border border-base-200">
         <div className="form-control w-full max-w-xs">
           <label className="label">
             <span className="label-text font-medium">Filter by Status</span>
@@ -118,15 +118,15 @@ const AssignedIssues = () => {
               </div>
             </figure>
             <div className="card-body">
-              <h2 className="card-title text-base">{issue.title}</h2>
-              <p className="text-xs text-gray-400 absolute top-4 left-4 bg-white/80 px-2 py-0.5 rounded backdrop-blur-sm">
+              <h2 className="card-title text-base text-base-content">{issue.title}</h2>
+              <p className="text-xs text-base-content/60 absolute top-4 left-4 bg-base-100/80 px-2 py-0.5 rounded backdrop-blur-sm">
                 {issue.category}
               </p>
 
-              <p className="text-sm text-gray-500 flex items-center gap-1 mt-1">
+              <p className="text-sm text-base-content/50 flex items-center gap-1 mt-1">
                 <span className="font-semibold">Loc:</span> {issue.location}
               </p>
-              <p className="text-sm line-clamp-2 mt-2 text-gray-600">
+              <p className="text-sm line-clamp-2 mt-2 text-base-content/60">
                 {issue.description}
               </p>
 
@@ -154,7 +154,7 @@ const AssignedIssues = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-52 border border-gray-100"
+                    className="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-200"
                   >
                     <li>
                       <a
@@ -181,7 +181,7 @@ const AssignedIssues = () => {
         ))}
       </div>
       {filteredIssues.length === 0 && (
-        <div className="col-span-full py-12 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-xl border-dashed border-2 border-gray-200">
+        <div className="col-span-full py-12 flex flex-col items-center justify-center text-base-content/40 bg-base-200 rounded-xl border-dashed border-2 border-base-300">
           <p className="text-lg">No issues found matching your filters.</p>
         </div>
       )}

@@ -20,6 +20,7 @@ import {
   FaThumbsUp,
 } from "react-icons/fa";
 import EditIssueModal from "../Dashboard/CitizenDashboard/EditIssueModal";
+import IssueCard from "../../Components/IssueCard";
 
 const IssueDetails = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -40,6 +41,17 @@ const IssueDetails = () => {
     queryFn: async () => {
       const res = await axios.get(`${BASE_URL}/issues/${id}`);
       return res.data;
+    },
+  });
+
+  const { data: relatedIssues } = useQuery({
+    queryKey: ["relatedIssues", issue?.category],
+    enabled: !!issue?.category,
+    queryFn: async () => {
+      const res = await axios.get(`${BASE_URL}/issues`, {
+        params: { category: issue.category, limit: 4 },
+      });
+      return res.data.issues;
     },
   });
 
@@ -126,10 +138,10 @@ const IssueDetails = () => {
               {category}
             </span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-base-content">
             {title}
           </h1>
-          <div className="flex items-center gap-4 mt-2 text-gray-500">
+          <div className="flex items-center gap-4 mt-2 text-base-content/60">
             <p className="flex items-center gap-1">
               <FaMapMarkerAlt className="text-primary" /> {location}
             </p>
@@ -187,10 +199,10 @@ const IssueDetails = () => {
           </div>
 
           <div className="bg-base-100 p-6 rounded-xl shadow-lg border border-base-200">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">
+            <h2 className="text-2xl font-bold mb-4 text-base-content border-b pb-2">
               Description
             </h2>
-            <p className="text-gray-600 leading-relaxed text-lg">
+            <p className="text-base-content/70 leading-relaxed text-lg">
               {description}
             </p>
           </div>
@@ -222,14 +234,14 @@ const IssueDetails = () => {
               </div>
               <div>
                 <p className="font-semibold">{userEmail}</p>
-                <p className="text-xs text-gray-500">Citizen</p>
+                <p className="text-xs text-base-content/60">Citizen</p>
               </div>
             </div>
           </div>
 
           {/* Assigned Staff Info */}
           <div className="bg-base-100 p-6 rounded-xl shadow-md border border-base-200">
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-gray-700">
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-base-content/80">
               <FaUserTie className="text-secondary" /> Assigned Staff
             </h3>
             {assignedStaff ? (
@@ -253,10 +265,10 @@ const IssueDetails = () => {
                   <p className="font-semibold">
                     {staffDetails?.name || assignedStaff}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-base-content/60">
                     {staffDetails?.role || "Staff Member"}
                   </p>
-                  <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                  <p className="text-xs text-base-content/40 mt-1 flex items-center gap-1">
                     <FaEnvelope /> {assignedStaff}
                   </p>
                 </div>
@@ -269,6 +281,25 @@ const IssueDetails = () => {
           </div>
         </div>
       </div>
+
+
+
+      {/* Related Issues Section */}
+      {relatedIssues && relatedIssues.length > 1 && (
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold mb-8 text-base-content border-l-4 border-primary pl-4">
+            Related Issues
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedIssues
+              .filter((item) => item._id !== id)
+              .slice(0, 3)
+              .map((item) => (
+                <IssueCard key={item._id} issue={item} />
+              ))}
+          </div>
+        </div>
+      )}
 
       {isEditModalOpen && (
         <EditIssueModal

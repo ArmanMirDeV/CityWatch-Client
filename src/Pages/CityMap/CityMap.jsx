@@ -67,8 +67,8 @@ export default function CityMap() {
   };
 
   return (
-    <div className="w-full py-16 bg-gray-100">
-      <h2 className="text-3xl text-blue-800 font-bold text-center mb-6">
+    <div className="w-full py-10 bg-base-200">
+      <h2 className="text-3xl text-primary font-bold text-center mb-6">
          City Map – Search Places
       </h2>
 
@@ -83,7 +83,7 @@ export default function CityMap() {
         />
         <button
           onClick={handleSearch}
-          className="px-4 py-2 bg-blue-600 cursor-pointer text-white rounded-r-lg"
+          className="px-4 py-2 bg-primary cursor-pointer text-primary-content rounded-r-lg"
         >
           Search
         </button>

@@ -135,83 +135,83 @@ export default function RegistrationForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#d8dae7] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white shadow-xl rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-5xl"
+        className="bg-base-100 shadow-xl rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-5xl"
       >
         {/* LEFT SIDE — FORM */}
         <div className="w-full md:w-1/2 p-10">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          <h1 className="text-3xl font-bold text-base-content mb-6">
             Registration
           </h1>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
+                <label className="block text-sm font-medium text-base-content/70 mb-1">
                   First Name
                 </label>
                 <input
                   {...register("firstName", { required: true })}
-                  className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
+                  className="w-full border-b border-base-300 focus:border-indigo-500 outline-none py-1 bg-transparent"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
+                <label className="block text-sm font-medium text-base-content/70 mb-1">
                   Second Name
                 </label>
                 <input
                   {...register("secondName", { required: true })}
-                  className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
+                  className="w-full border-b border-base-300 focus:border-indigo-500 outline-none py-1 bg-transparent"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+              <label className="block text-sm font-medium text-base-content/70 mb-1">
                 Username
               </label>
               <input
                 {...register("username", { required: true })}
-                className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
+                className="w-full border-b border-base-300 focus:border-indigo-500 outline-none py-1 bg-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+              <label className="block text-sm font-medium text-base-content/70 mb-1">
                 Email
               </label>
               <input
                 {...register("email", { required: true })}
                 type="email"
-                className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
+                className="w-full border-b border-base-300 focus:border-indigo-500 outline-none py-1 bg-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+              <label className="block text-sm font-medium text-base-content/70 mb-1">
                 Password
               </label>
               <input
                 {...register("password", { required: true })}
                 type="password"
-                className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
+                className="w-full border-b border-base-300 focus:border-indigo-500 outline-none py-1 bg-transparent"
               />
             </div>
 
             {/* Image Upload Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+              <label className="block text-sm font-medium text-base-content/70 mb-1">
                 Upload Profile Image
               </label>
               <input
                 {...register("profileImage", { required: true })}
                 type="file"
                 accept="image/*"
-                className="w-full border-b border-gray-300 focus:border-indigo-500 outline-none py-1"
+                className="w-full border-b border-base-300 focus:border-indigo-500 outline-none py-1 bg-transparent"
               />
             </div>
 
@@ -221,7 +221,7 @@ export default function RegistrationForm() {
               whileTap={{ scale: 0.95 }}
               type="submit"
               disabled={loading}
-              className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-full shadow-md hover:bg-indigo-700 transition"
+              className="mt-4 w-full btn btn-primary rounded-full shadow-md text-white border-none"
             >
               {loading ? "Registering..." : "Register"}
             </motion.button>
@@ -233,10 +233,10 @@ export default function RegistrationForm() {
             whileTap={{ scale: 0.95 }}
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="mt-4 w-full flex items-center justify-center gap-3 bg-white border border-gray-300 py-2 rounded-full shadow-sm hover:bg-gray-50 transition"
+            className="mt-4 w-full flex items-center justify-center gap-3 bg-base-100 border border-base-300 py-2 rounded-full shadow-sm hover:bg-base-200 transition"
           >
             <FcGoogle className="text-2xl" />
-            <span className="text-gray-700 text-sm font-medium">
+            <span className="text-base-content text-sm font-medium">
               {loading ? "Processing..." : "Continue with Google"}
             </span>
           </motion.button>
@@ -247,7 +247,7 @@ export default function RegistrationForm() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/login")}
-              className="text-sm text-indigo-600 hover:underline"
+              className="text-sm link link-primary hover:underline"
             >
               Already have an account? Login
             </motion.button>

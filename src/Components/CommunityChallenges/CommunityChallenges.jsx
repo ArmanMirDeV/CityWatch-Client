@@ -31,7 +31,7 @@ const challenges = [
 
 const CommunityChallenges = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-100">
+    <section className="py-20 bg-base-200">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Title */}
         <motion.h2
@@ -39,7 +39,7 @@ const CommunityChallenges = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-extrabold text-center text-blue-900"
+          className="text-4xl md:text-5xl font-extrabold text-center text-base-content"
         >
           Community Challenges
         </motion.h2>
@@ -49,7 +49,7 @@ const CommunityChallenges = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center text-gray-600 max-w-2xl mx-auto mt-4 mb-12"
+          className="text-center text-base-content/70 max-w-2xl mx-auto mt-4 mb-12"
         >
           Earn badges, climb the leaderboard, and help make your city cleaner,
           safer, and smarter.
@@ -65,21 +65,21 @@ const CommunityChallenges = () => {
               transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
-              className="p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl cursor-pointer border transition-all"
+              className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-2xl cursor-pointer border border-base-300 transition-all"
             >
               <div className="text-5xl flex justify-center mb-4">
                 {item.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-800 text-center">
+              <h3 className="text-xl font-bold text-base-content text-center">
                 {item.title}
               </h3>
-              <p className="text-gray-600 text-center mt-2">{item.subtitle}</p>
+              <p className="text-base-content/70 text-center mt-2">{item.subtitle}</p>
 
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="mt-5 flex justify-center text-sm text-center text-blue-700 font-semibold bg-blue-50 py-2 rounded-lg"
+                className="mt-5 flex justify-center text-sm text-center text-primary font-semibold bg-primary/20 py-2 rounded-lg"
               >
                 <FaGift size={20} />
                 Reward: {item.reward}

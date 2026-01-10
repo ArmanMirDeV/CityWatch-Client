@@ -31,7 +31,7 @@ const awards = [
 
 const Awards = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-20 bg-base-200">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Heading */}
         <motion.h2
@@ -39,7 +39,7 @@ const Awards = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-extrabold text-center text-blue-900 mb-12"
+          className="text-4xl md:text-5xl font-extrabold text-center text-base-content mb-12"
         >
           Recognitions & Awards
         </motion.h2>
@@ -53,17 +53,17 @@ const Awards = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="p-6 bg-white text-center rounded-2xl shadow-lg border hover:shadow-2xl transition-all duration-300"
+              className="p-6 bg-base-100 text-center rounded-2xl shadow-lg border border-base-300 hover:shadow-2xl transition-all duration-300"
             >
               <div className="text-5xl mb-4 flex justify-center">
                 {award.icon}
               </div>
 
-              <h3 className="text-xl font-bold text-gray-800 mb-2">
+              <h3 className="text-xl font-bold text-base-content mb-2">
                 {award.title}
               </h3>
 
-              <p className="text-gray-600 text-sm">{award.description}</p>
+              <p className="text-base-content/70 text-sm">{award.description}</p>
             </motion.div>
           ))}
         </div>

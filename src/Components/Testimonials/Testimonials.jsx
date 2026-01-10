@@ -119,9 +119,9 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-base-200">
       <div className="container mx-auto px-4 md:px-8 lg:px-16 text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-blue-900 mb-12">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-base-content mb-12">
           What Our Users Say
         </h2>
 
@@ -141,7 +141,7 @@ const Testimonials = () => {
         >
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index}>
-              <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center mx-2 hover:scale-105 transition-transform cursor-pointer">
+              <div className="bg-base-100 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center mx-2 hover:scale-105 transition-transform cursor-pointer">
                 <div className="w-16 h-16 mb-4">
                   <img
                     src={testimonial.avatar}
@@ -149,12 +149,12 @@ const Testimonials = () => {
                     className="rounded-full object-cover w-full h-full"
                   />
                 </div>
-                <FaQuoteLeft className="text-blue-600 mb-4 text-2xl" />
-                <p className="text-gray-600 mb-4">{testimonial.feedback}</p>
-                <h3 className="text-lg font-bold text-gray-900">
+                <FaQuoteLeft className="text-primary mb-4 text-2xl" />
+                <p className="text-base-content/70 mb-4">{testimonial.feedback}</p>
+                <h3 className="text-lg font-bold text-base-content">
                   {testimonial.name}
                 </h3>
-                <p className="text-sm text-gray-500">{testimonial.role}</p>
+                <p className="text-sm text-base-content/60">{testimonial.role}</p>
               </div>
             </SwiperSlide>
           ))}

@@ -93,9 +93,9 @@ const AdminAllIssues = () => {
         <div className="w-full">
             <h2 className="text-3xl font-bold my-4">All Issues (Admin View)</h2>
             
-            <div className="overflow-x-auto bg-white rounded-lg shadow-xl">
+            <div className="overflow-x-auto bg-base-100 rounded-lg shadow-xl">
                 <table className="table w-full">
-                    <thead className="bg-gray-200">
+                    <thead className="bg-base-200 text-base-content/80">
                         <tr>
                             <th>Title</th>
                             <th>Category</th>
@@ -109,8 +109,8 @@ const AdminAllIssues = () => {
                         {issuesData.issues?.map((issue) => (
                             <tr key={issue._id}>
                                 <td>
-                                    <div className="font-bold">{issue.title}</div>
-                                    <div className="text-sm opacity-50">{issue.location}</div>
+                                    <div className="font-bold text-base-content">{issue.title}</div>
+                                    <div className="text-sm opacity-50 text-base-content/60">{issue.location}</div>
                                 </td>
                                 <td>{issue.category}</td>
                                 <td>
@@ -127,7 +127,7 @@ const AdminAllIssues = () => {
                                     {issue.assignedStaff ? (
                                         <span className="badge badge-neutral text-white gap-1"><FaCheckCircle/> {issue.assignedStaff}</span>
                                     ) : (
-                                        <span className="text-gray-400 italic">Unassigned</span>
+                                        <span className="text-base-content/40 italic">Unassigned</span>
                                     )}
                                 </td>
                                 <td className="flex gap-2 items-center">

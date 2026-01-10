@@ -38,7 +38,7 @@ const StaffOverview = () => {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="stat bg-white shadow-xl rounded-2xl border border-gray-100">
+        <div className="stat bg-base-100 shadow-xl rounded-2xl border border-base-200">
           <div className="stat-figure text-primary">
             <FaClipboardList className="text-4xl" />
           </div>
@@ -49,7 +49,7 @@ const StaffOverview = () => {
           <div className="stat-desc">Total issues assigned</div>
         </div>
 
-        <div className="stat bg-white shadow-xl rounded-2xl border border-gray-100">
+        <div className="stat bg-base-100 shadow-xl rounded-2xl border border-base-200">
           <div className="stat-figure text-secondary">
             <FaSpinner className="text-4xl" />
           </div>
@@ -60,7 +60,7 @@ const StaffOverview = () => {
           <div className="stat-desc">Tasks needing attention</div>
         </div>
 
-        <div className="stat bg-white shadow-xl rounded-2xl border border-gray-100">
+        <div className="stat bg-base-100 shadow-xl rounded-2xl border border-base-200">
           <div className="stat-figure text-success">
             <FaCheckCircle className="text-4xl" />
           </div>
@@ -69,7 +69,7 @@ const StaffOverview = () => {
           <div className="stat-desc">Successfully fixed</div>
         </div>
 
-        <div className="stat bg-white shadow-xl rounded-2xl border border-gray-100">
+        <div className="stat bg-base-100 shadow-xl rounded-2xl border border-base-200">
           <div className="stat-figure text-info">
             <FaCheckCircle className="text-4xl" />
           </div>
@@ -81,8 +81,8 @@ const StaffOverview = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Priority Chart */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center">
-          <h3 className="text-xl font-bold mb-4 text-gray-700 w-full text-left">
+        <div className="bg-base-100 p-6 rounded-2xl shadow-lg border border-base-200 flex flex-col items-center">
+          <h3 className="text-xl font-bold mb-4 text-base-content/80 w-full text-left">
             Issues by Priority
           </h3>
           {stats.totalAssigned > 0 ? (
@@ -120,15 +120,15 @@ const StaffOverview = () => {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-400">
+            <div className="h-64 flex items-center justify-center text-base-content/40">
               No data available
             </div>
           )}
         </div>
 
         {/* Status Chart */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center">
-          <h3 className="text-xl font-bold mb-4 text-gray-700 w-full text-left">
+        <div className="bg-base-100 p-6 rounded-2xl shadow-lg border border-base-200 flex flex-col items-center">
+          <h3 className="text-xl font-bold mb-4 text-base-content/80 w-full text-left">
             Issues by Status
           </h3>
           {stats.totalAssigned > 0 ? (
@@ -197,7 +197,7 @@ const StaffOverview = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-400">
+            <div className="h-64 flex items-center justify-center text-base-content/40">
               No data available
             </div>
           )}
