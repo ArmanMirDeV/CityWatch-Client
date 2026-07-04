@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router";
 
 import bannerImg1 from "../../assets/banner/banner1.jpg";
@@ -15,81 +15,163 @@ import bannerImg8 from "../../assets/banner/banner8.jpg";
 import bannerImg9 from "../../assets/banner/banner9.jpg";
 import bannerImg10 from "../../assets/banner/banner10.jpg";
 
+const slides = [
+  { img: bannerImg1, description: "Track Broken Streetlights", tag: "Infrastructure" },
+  { img: bannerImg2, description: "Report Potholes Quickly", tag: "Road Safety" },
+  { img: bannerImg3, description: "Submit Water Leakage Issues", tag: "Utilities" },
+  { img: bannerImg4, description: "CityWatch Ensures Clean Streets", tag: "Sanitation" },
+  { img: bannerImg5, description: "Monitor Damaged Footpaths", tag: "Infrastructure" },
+  { img: bannerImg6, description: "Boost Priority Issues Easily", tag: "Premium" },
+  { img: bannerImg7, description: "Staff Efficiently Assigned", tag: "Management" },
+  { img: bannerImg8, description: "Follow Issue Timelines", tag: "Tracking" },
+  { img: bannerImg9, description: "Receive Updates Instantly", tag: "Notifications" },
+  { img: bannerImg10, description: "Make Your City Better", tag: "Community" },
+];
+
+const tagGradients = {
+  Infrastructure: "from-primary to-primary-dark",
+  "Road Safety": "from-secondary to-secondary-dark",
+  Utilities: "from-info to-info-dark",
+  Sanitation: "from-success to-success-dark",
+  Premium: "from-accent to-accent-dark",
+  Management: "from-info to-info-dark",
+  Tracking: "from-primary to-primary-dark",
+  Notifications: "from-accent to-accent-dark",
+  Community: "from-success to-success-dark",
+};
+
 const Banner = () => {
-  const slides = [
-    { img: bannerImg1, description: "Track broken streetlights" },
-    { img: bannerImg2, description: "Report potholes quickly" },
-    { img: bannerImg3, description: "Submit water leakage issues" },
-    { img: bannerImg4, description: "CityWatch ensures clean streets" },
-    { img: bannerImg5, description: "Monitor damaged footpaths" },
-    { img: bannerImg6, description: "Boost priority issues easily" },
-    { img: bannerImg7, description: "Staff efficiently assigned" },
-    { img: bannerImg8, description: "Follow issue timelines" },
-    { img: bannerImg9, description: "Receive updates instantly" },
-    { img: bannerImg10, description: "Make your city better" },
-  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const pad = (n) => String(n + 1).padStart(2, "0");
 
   return (
-    <div className="relative w-full">
-      {/* Carousel */}
+    <div className="relative w-full select-none">
       <Carousel
         autoPlay
-        interval={2500}
+        interval={4500}
         infiniteLoop
         showThumbs={false}
         showStatus={false}
+        showIndicators={false}
         swipeable
         emulateTouch
+        transitionTime={600}
+        onChange={(i) => setCurrentIndex(i)}
+        renderArrowPrev={(clickHandler) => (
+          <button
+            onClick={clickHandler}
+            className="
+              absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20
+              w-11 h-11 md:w-13 md:h-13 rounded-full
+              bg-white/10 backdrop-blur-md border border-white/20
+              flex items-center justify-center text-white
+              hover:bg-white/25 hover:scale-110
+              transition-all duration-300 cursor-pointer
+            "
+            aria-label="Previous slide"
+          >
+            <FiChevronLeft size={22} />
+          </button>
+        )}
+        renderArrowNext={(clickHandler) => (
+          <button
+            onClick={clickHandler}
+            className="
+              absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20
+              w-11 h-11 md:w-13 md:h-13 rounded-full
+              bg-white/10 backdrop-blur-md border border-white/20
+              flex items-center justify-center text-white
+              hover:bg-white/25 hover:scale-110
+              transition-all duration-300 cursor-pointer
+            "
+            aria-label="Next slide"
+          >
+            <FiChevronRight size={22} />
+          </button>
+        )}
       >
         {slides.map((slide, index) => (
-          <div key={index} className="relative">
+          <div key={index} className="relative h-[480px] md:h-[560px] lg:h-[620px] overflow-hidden">
             <img
               src={slide.img}
-              alt={`Banner ${index + 1}`}
-              className="w-full h-[500px] object-cover"
+              alt={slide.description}
+              className="w-full h-full object-cover"
+              draggable={false}
             />
-            {/* Description Overlay */}
-            <div className="absolute  inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
-              <h2 className="text-white text-2xl md:text-4xl font-bold drop-shadow-lg">
-                {slide.description}
-              </h2>
+
+            {/* Cinematic Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 via-40% to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+
+            {/* Text Content */}
+            <div className="absolute inset-0 flex items-end md:items-center">
+              <div className="w-full px-6 md:px-14 lg:px-20 pb-24 md:pb-0">
+                <div className="max-w-2xl">
+                  {/* Tag Badge */}
+                  <span
+                    className={`inline-block px-4 py-1 rounded-full bg-gradient-to-r ${tagGradients[slide.tag]} text-white text-xs font-semibold tracking-wide uppercase mb-4`}
+                  >
+                    {slide.tag}
+                  </span>
+
+                  {/* Heading */}
+                  <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight drop-shadow-lg">
+                    {slide.description}
+                  </h2>
+
+                  {/* Slide Counter */}
+                  <p className="text-white/50 text-sm font-mono mt-4 tracking-wider">
+                    {pad(index)} <span className="text-white/20">—</span> {pad(slides.length - 1)}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         ))}
       </Carousel>
 
-      {/* Buttons */}
+      {/* Progress Bar Indicators */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {/* carousel doesn't expose goTo easily */}}
+            className={`h-1 rounded-full transition-all duration-700 cursor-pointer ${
+              i === currentIndex
+                ? "w-10 bg-primary"
+                : "w-4 bg-white/30 hover:bg-white/50"
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Slide Counter — Desktop */}
+      <div className="hidden md:block absolute bottom-6 right-10 z-20">
+        <span className="text-white/60 text-sm font-mono tracking-widest">
+          {pad(currentIndex)} / {pad(slides.length - 1)}
+        </span>
+      </div>
+
+      {/* Action Buttons */}
       <div
         className="
-          flex items-center gap-4 z-20
-          sm:flex-col sm:w-full sm:px-4 sm:mt-4 sm:static
-          md:absolute md:left-10 md:bottom-24 md:flex-row
-          lg:bottom-32
+          flex items-center gap-3 z-20
+          absolute left-6 md:left-14 bottom-6 md:bottom-6
         "
       >
         <Link to="/dashboard/citizen/report-issue">
-          <button
-            className="
-              flex items-center gap-3 bg-blue-600 text-white font-medium
-              px-6 py-3 rounded-full transition-all hover:bg-blue-700 cursor-pointer
-              sm:px-4 sm:py-2 sm:text-sm sm:gap-2
-            "
-          >
+          <button className="group flex items-center gap-2.5 bg-primary text-white font-semibold px-5 py-2.5 md:px-6 md:py-3 rounded-full hover:bg-primary-dark transition-all shadow-lg shadow-primary/30 cursor-pointer text-sm md:text-base">
             Report Issue
-            <span className="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center sm:w-6 sm:h-6">
-              <FiArrowUpRight className="sm:text-[14px]" />
+            <span className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-white text-primary flex items-center justify-center group-hover:rotate-45 transition-transform">
+              <FiArrowUpRight size={14} />
             </span>
           </button>
         </Link>
 
         <Link to="/all-issues">
-          <button
-            className="
-              px-6 py-3 rounded-full border border-base-300 text-primary font-medium
-              hover:bg-neutral transition-all cursor-pointer
-              sm:px-4 sm:py-2 sm:text-sm
-            "
-          >
+          <button className="px-5 py-2.5 md:px-6 md:py-3 rounded-full border border-white/30 text-white font-medium hover:bg-white/10 transition-all backdrop-blur-sm cursor-pointer text-sm md:text-base">
             View All Issues
           </button>
         </Link>
